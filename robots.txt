@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aera-studio.be/sitemap.xml

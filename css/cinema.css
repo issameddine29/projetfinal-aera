@@ -1,0 +1,575 @@
+/* ================================================================
+   ÆRĀ STUDIO — cinema.css  v4.0
+   Présentation premium + animation cinématographique
+   ================================================================ */
+
+/* ── FILM GRAIN ───────────────────────────────────────────────── */
+@keyframes cine-grain-drift {
+    0%,100% { transform:translate(0,0)    }
+    12%     { transform:translate(-2%,-3%) }
+    25%     { transform:translate( 3%, 2%) }
+    37%     { transform:translate(-2%, 3%) }
+    50%     { transform:translate( 2%,-2%) }
+    62%     { transform:translate(-3%, 1%) }
+    75%     { transform:translate( 3%, 2%) }
+    87%     { transform:translate(-1%, 3%) }
+}
+.cine-grain {
+    position: fixed; inset: -50%;
+    width: 200%; height: 200%;
+    pointer-events: none; z-index: 9998;
+    opacity: 0.024;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    animation: cine-grain-drift .14s steps(1) infinite;
+    will-change: transform;
+}
+[data-theme="dark"] .cine-grain { opacity: 0.040; }
+@media (max-width:768px) { .cine-grain { opacity: .012; } }
+
+/* ── VIGNETTE ─────────────────────────────────────────────────── */
+.cine-vignette {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 9997;
+    background: radial-gradient(ellipse 90% 90% at center, transparent 44%, rgba(0,0,0,.28) 100%);
+}
+[data-theme="dark"] .cine-vignette {
+    background: radial-gradient(ellipse 80% 80% at center, transparent 40%, rgba(0,0,0,.55) 100%);
+}
+@media (max-width:768px) { .cine-vignette { display:none; } }
+
+/* ── SPOTLIGHT ────────────────────────────────────────────────── */
+.cine-spotlight {
+    position: fixed; width: 500px; height: 500px;
+    border-radius: 50%; pointer-events: none; z-index: 9996;
+    transform: translate(-50%,-50%);
+    background: radial-gradient(circle, rgba(77,158,255,.045) 0%, transparent 66%);
+    opacity: 0; transition: opacity .6s ease;
+    will-change: left, top;
+}
+[data-theme="dark"] .cine-spotlight {
+    background: radial-gradient(circle, rgba(77,158,255,.09) 0%, transparent 66%);
+}
+body:hover .cine-spotlight { opacity: 1; }
+@media (max-width:768px) { .cine-spotlight { display:none; } }
+
+/* ── CANVAS RÉSEAU NEURONAL (z-index géré par JS) ────────────── */
+#cine-bg { transition: opacity .5s ease; }
+
+/* Z-index hiérarchie propre */
+.page-loader   { z-index: 10000 !important; }
+.cine-grain    { z-index:  9998 !important; }
+.cine-vignette { z-index:  9997 !important; }
+.cine-spotlight{ z-index:  9996 !important; }
+.custom-cursor { z-index:  9995 !important; }
+#navbar        { z-index:  9994 !important; }
+.float-devis   { z-index:  9002 !important; }
+.announce-bar  { z-index:  9992 !important; }
+/* #cine-bg  → 9990, géré par JS */
+
+/* ── SCROLL PROGRESS ──────────────────────────────────────────── */
+#scrollProgress {
+    height: 2px !important;
+    background: linear-gradient(90deg, var(--terra), var(--gold)) !important;
+    box-shadow: 0 0 10px rgba(77,158,255,.7) !important;
+    transition: none !important;
+}
+
+/* ================================================================
+   HERO — Traitement dramatique
+================================================================ */
+#accueil {
+    overflow: hidden;
+}
+
+/* Halo de lumière derrière la section hero */
+#accueil::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 70% 60% at 60% 40%,
+            rgba(77,158,255,.07) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 20% 80%,
+            rgba(0,212,255,.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+[data-theme="dark"] #accueil::before {
+    background:
+        radial-gradient(ellipse 70% 60% at 60% 40%,
+            rgba(77,158,255,.14) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 20% 80%,
+            rgba(0,212,255,.08) 0%, transparent 60%);
+}
+
+/* Depth layer parallax souris */
+.cine-depth-bg {
+    position: absolute; inset: -20%;
+    width: 140%; height: 140%;
+    background: radial-gradient(ellipse 55% 55% at 55% 45%,
+        rgba(77,158,255,.06) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+    will-change: transform;
+}
+[data-theme="dark"] .cine-depth-bg {
+    background: radial-gradient(ellipse 55% 55% at 55% 45%,
+        rgba(77,158,255,.13) 0%, transparent 70%);
+}
+
+/* Texte em dans h2 — dégradé accent */
+h2 em {
+    background: linear-gradient(120deg, var(--terra) 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-style: italic;
+}
+
+/* Hero title line 3 garde son style Playfair — on évite le conflit */
+.hero-title-line:nth-child(3) span {
+    -webkit-text-fill-color: var(--terra);
+}
+
+/* ── HERO STATS — présentation renforcée ─────────────────────── */
+.hero-stat-num {
+    font-size: clamp(2rem, 4vw, 3rem) !important;
+    background: linear-gradient(135deg, var(--ink) 0%, var(--terra) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="dark"] .hero-stat-num {
+    background: linear-gradient(135deg, #fff 0%, var(--terra-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── HERO CARDS — glassmorphism renforcé ─────────────────────── */
+.hero-card {
+    will-change: transform;
+    transition: transform .38s cubic-bezier(.23,1,.32,1), box-shadow .38s ease;
+    backdrop-filter: blur(16px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
+}
+.hero-card:hover {
+    transform: translateY(-8px) scale(1.05) !important;
+    box-shadow: 0 24px 48px -12px rgba(77,158,255,.30) !important;
+}
+
+/* ── MARQUEE EDGE FADES ───────────────────────────────────────── */
+.stack-marquee, .results-marquee, .reviews-marquee { position: relative; }
+.stack-marquee::before,   .stack-marquee::after,
+.results-marquee::before, .results-marquee::after,
+.reviews-marquee::before, .reviews-marquee::after {
+    content: ''; position: absolute;
+    top: 0; bottom: 0; width: 120px;
+    z-index: 2; pointer-events: none;
+}
+.stack-marquee::before, .results-marquee::before, .reviews-marquee::before {
+    left: 0; background: linear-gradient(90deg, var(--paper), transparent);
+}
+.stack-marquee::after, .results-marquee::after, .reviews-marquee::after {
+    right: 0; background: linear-gradient(-90deg, var(--paper), transparent);
+}
+
+/* ================================================================
+   NEUTRALISER révéals CSS — GSAP a le contrôle
+================================================================ */
+.js-ready .reveal-card,
+.js-ready .reveal-card.revealed,
+.js-ready .reveal-text,
+.js-ready .reveal-text.revealed {
+    opacity: 1; transform: none; transition: none;
+}
+
+/* ================================================================
+   WILL-CHANGE — GPU layers
+================================================================ */
+.svc-card, .pb-card, .sol-card, .svc-xp-card, .faq-item,
+.tm-card, .pf-carousel, .service-card-auto, .sol-banner,
+.contact-box, .hero-card, .hero-orb, .cine-depth-bg,
+.reveal-card, .reveal-text, .methode-step,
+.pr-v2 {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* ================================================================
+   CARDS — Bordure lumineuse gradient (::before overlay)
+================================================================ */
+.svc-card, .sol-card, .pb-card, .svc-xp-card,
+.tm-card, .formule-card, .pricing-card {
+    position: relative;
+    isolation: isolate;
+}
+
+.svc-card::before, .sol-card::before, .pb-card::before,
+.svc-xp-card::before, .tm-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(77,158,255,.0) 0%,
+        rgba(77,158,255,.0) 100%
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    transition: background .4s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.svc-card:hover::before {
+    background: linear-gradient(135deg,
+        rgba(77,158,255,.55) 0%,
+        rgba(0,212,255,.30) 50%,
+        rgba(77,158,255,.15) 100%
+    );
+}
+.sol-card:hover::before {
+    background: linear-gradient(135deg,
+        rgba(var(--sol-acc-rgb, 77,158,255),.55) 0%,
+        rgba(0,212,255,.25) 100%
+    );
+}
+.pb-card:hover::before {
+    background: linear-gradient(135deg,
+        rgba(255,80,80,.30) 0%,
+        rgba(77,158,255,.20) 100%
+    );
+}
+.svc-xp-card:hover::before {
+    background: linear-gradient(135deg,
+        rgba(77,158,255,.45) 0%,
+        rgba(0,212,255,.20) 100%
+    );
+}
+.tm-card:hover::before {
+    background: linear-gradient(135deg,
+        rgba(77,158,255,.45) 0%,
+        rgba(0,212,255,.20) 100%
+    );
+}
+
+/* ── SERVICE CARDS — hover amélioré ──────────────────────────── */
+.svc-card {
+    transition:
+        transform .38s cubic-bezier(.23,1,.32,1),
+        box-shadow .38s ease,
+        border-color .38s ease !important;
+}
+.svc-card:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 28px 60px -16px rgba(77,158,255,.22) !important;
+}
+
+/* ── SOL CARDS — hover ────────────────────────────────────────── */
+.sol-card {
+    transition: transform .38s cubic-bezier(.23,1,.32,1),
+                box-shadow .38s ease !important;
+}
+.sol-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 24px 52px -14px rgba(77,158,255,.25) !important;
+}
+
+/* ── STATS NUMÉRIQUES SOLUTION — bloom ───────────────────────── */
+.sol-stat {
+    display: block;
+    background: linear-gradient(135deg, var(--terra-light) 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(77,158,255,.35));
+}
+
+/* section-num — supprimé (plus utilisé dans le HTML) */
+
+/* ── DIVIDER LINE — gradient animé ───────────────────────────────── */
+/* divider-line — supprimé (plus utilisé dans le HTML) */
+
+/* ── BOUTONS — présentation premium ─────────────────────────── */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+    transform: translateX(-100%);
+    transition: transform .6s ease;
+}
+.btn-primary:hover::after { transform: translateX(100%); }
+
+/* CTA pulse */
+@keyframes cine-pulse {
+    0%,100% { box-shadow: 0 0 0 0   rgba(77,158,255,.45); }
+    50%      { box-shadow: 0 0 0 10px rgba(77,158,255,.0); }
+}
+.btn-primary:not(:hover) { animation: cine-pulse 3.5s ease-in-out infinite; }
+
+/* hero-title-line overflow → fullpage.css */
+
+/* ── CONTACT BOX — glow d'entrée ─────────────────────────────── */
+.contact-box {
+    transition: transform .38s cubic-bezier(.23,1,.32,1),
+                box-shadow .38s ease !important;
+}
+.contact-box:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 32px 64px -20px rgba(77,158,255,.20) !important;
+}
+
+/* ── FAQ ITEMS — hover subtil ─────────────────────────────────── */
+.faq-item {
+    transition: transform .3s ease, border-color .3s ease !important;
+}
+.faq-item:hover { transform: translateX(6px) !important; }
+
+/* ── PORTFOLIO CAROUSEL — frame premium ──────────────────────── */
+.pf-carousel { position: relative; }
+.pf-carousel::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg,
+        rgba(77,158,255,.10) 0%,
+        transparent 35%,
+        transparent 65%,
+        rgba(0,212,255,.06) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── TÉMOIGNAGE — accent doré ─────────────────────────────────── */
+.tm-quote-mark {
+    color: var(--terra) !important;
+    opacity: .35;
+}
+
+/* ── HERO ORB — renforcement ─────────────────────────────────── */
+.hero-orb {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* ── HERO AVAILABILITY BADGE ──────────────────────────────────── */
+@keyframes hero-dot-ring {
+    0%   { transform: scale(1); opacity: .7; }
+    70%  { transform: scale(2.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 0; }
+}
+.hero-avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(26,101,255,.10);
+    border: 1px solid rgba(26,101,255,.25);
+    color: var(--terra);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 12px 4px 9px;
+    border-radius: 100px;
+    backdrop-filter: blur(8px);
+}
+[data-theme="dark"] .hero-avail-badge {
+    background: rgba(80,148,255,.12);
+    border-color: rgba(80,148,255,.30);
+}
+.hero-avail-dot {
+    position: relative;
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    flex-shrink: 0;
+}
+.hero-avail-dot::before {
+    content: '';
+    position: absolute; inset: -2px;
+    border-radius: 50%;
+    background: rgba(34,197,94,.45);
+    animation: hero-dot-ring 2.2s ease-out infinite;
+}
+.hero-overline-sep { opacity: .35; margin: 0 2px; }
+
+/* ── CTA MID-BAND PREMIUM ─────────────────────────────────────── */
+@keyframes cta-mid-shimmer {
+    0%   { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+.cta-mid-band {
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+/* Grille de fond très subtile */
+.cta-mid-band::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(77,158,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77,158,255,.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+.cta-mid-inner {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+.cta-mid-label {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 20px;
+    opacity: .85;
+}
+.cta-mid-title {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: clamp(2rem, 4vw, 3rem) !important;
+    font-weight: 400 !important;
+    line-height: 1.15 !important;
+    color: #fff !important;
+    margin-bottom: 24px !important;
+}
+[data-theme="light"] .cta-mid-title { color: #fff !important; }
+
+.cta-mid-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 36px;
+}
+.cta-mid-avail {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.80rem;
+    font-weight: 500;
+    color: rgba(255,255,255,.65);
+    letter-spacing: .04em;
+}
+.cta-mid-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px rgba(34,197,94,.70);
+    flex-shrink: 0;
+}
+.cta-mid-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--terra) 0%, var(--gold) 100%);
+    background-size: 200% 100%;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 15px 32px;
+    border-radius: 50px;
+    box-shadow: 0 8px 32px rgba(26,101,255,.40);
+    transition: transform .28s cubic-bezier(.23,1,.32,1), box-shadow .28s ease, background-position .5s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: .01em;
+}
+.cta-mid-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent);
+    transform: translateX(-120%);
+    transition: transform .6s ease;
+}
+.cta-mid-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(26,101,255,.55);
+    background-position: right center;
+}
+.cta-mid-btn:hover::before { transform: translateX(120%); }
+
+[data-theme="dark"] .cta-mid-btn {
+    box-shadow: 0 8px 32px rgba(80,148,255,.45);
+}
+[data-theme="dark"] .cta-mid-btn:hover {
+    box-shadow: 0 16px 48px rgba(80,148,255,.65);
+}
+
+/* ── BTN-GHOST — style renforcé ──────────────────────────────── */
+.btn-ghost {
+    position: relative;
+    overflow: hidden;
+    border: 1.5px solid rgba(26,101,255,.30) !important;
+    transition: border-color .3s ease, color .3s ease, background .3s ease !important;
+}
+.btn-ghost::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--terra);
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s cubic-bezier(.23,1,.32,1), opacity .35s ease;
+}
+.btn-ghost:hover { color: #fff !important; border-color: var(--terra) !important; }
+.btn-ghost:hover::before { transform: scaleX(1); opacity: 1; }
+.btn-ghost span, .btn-ghost { position: relative; z-index: 1; }
+
+/* ── HERO SUBTITLE — lisibilité ──────────────────────────────── */
+.hero-subtitle em {
+    font-style: italic;
+    color: var(--terra);
+    -webkit-text-fill-color: var(--terra);
+}
+
+/* ── SECTION HEADER CENTERED ─────────────────────────────────── */
+.section-header.centered { max-width: 640px; margin-inline: auto; }
+.section-header h2 { margin-bottom: 16px !important; }
+.section-header p { color: var(--text-muted); font-size: .95rem; line-height: 1.7; }
+
+/* ── REDUCED MOTION ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .cine-grain { animation: none; opacity: 0; }
+    .cine-vignette, .cine-spotlight { display: none; }
+    .btn-primary { animation: none; }
+    #cine-bg { display: none; }
+    .hero-avail-dot::before { animation: none; }
+}
+
+@media (max-width: 768px) {
+    .cta-mid-inner { padding: 0 24px; }
+    .cta-mid-btn { width: 100%; justify-content: center; }
+}

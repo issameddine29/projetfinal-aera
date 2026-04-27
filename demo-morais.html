@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Morais Cleaning — Démo interactive · ÆRĀ Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <script>
+        (function(){
+            var t = localStorage.getItem('aera-theme') ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --terra: #c17b4e;
+            --bg: #faf8f5;
+            --surface: #f3f0eb;
+            --border: rgba(0,0,0,.1);
+            --text-heading: #1a1a1a;
+            --text-body: #3a3a3a;
+            --text-muted: #888;
+            --bar-h: 56px;
+            --chrome-h: 44px;
+        }
+        [data-theme="dark"] {
+            --bg: #111;
+            --surface: #1a1a1a;
+            --border: rgba(255,255,255,.1);
+            --text-heading: #f5f0e8;
+            --text-body: #ccc;
+            --text-muted: #666;
+        }
+
+        html, body { height: 100%; background: var(--bg); font-family: 'DM Sans', sans-serif; }
+
+        /* ── Barre ÆRĀ ────────────────────── */
+        #aera-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--bar-h);
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            gap: 16px;
+        }
+
+        .bar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
+
+        .bar-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            text-decoration: none;
+            letter-spacing: .04em;
+        }
+        .bar-logo span { color: var(--terra); }
+
+        .bar-sep {
+            width: 1px;
+            height: 18px;
+            background: var(--border);
+        }
+
+        .bar-project {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .82rem;
+            color: var(--text-muted);
+        }
+
+        .bar-project strong {
+            color: var(--text-heading);
+            font-weight: 500;
+        }
+
+        .demo-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: color-mix(in srgb, var(--terra) 12%, transparent);
+            color: var(--terra);
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 20px;
+            border: 1px solid color-mix(in srgb, var(--terra) 25%, transparent);
+        }
+        .demo-pill::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--terra);
+        }
+
+        .bar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .bar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: .8rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: opacity .15s;
+        }
+        .bar-btn:hover { opacity: .8; }
+
+        .bar-btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-body);
+        }
+
+        .bar-btn-cta {
+            background: var(--terra);
+            color: #fff;
+        }
+
+        /* ── Chrome navigateur ───────────────────── */
+        #browser-chrome {
+            position: fixed;
+            top: var(--bar-h);
+            left: 0; right: 0;
+            height: var(--chrome-h);
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            gap: 12px;
+            z-index: 999;
+        }
+
+        .chrome-dots {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .chrome-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+        .chrome-dot:nth-child(1) { background: #ff5f57; }
+        .chrome-dot:nth-child(2) { background: #febc2e; }
+        .chrome-dot:nth-child(3) { background: #28c840; }
+
+        .chrome-nav {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .chrome-nav button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            transition: color .15s;
+        }
+        .chrome-nav button:hover { color: var(--text-heading); }
+
+        .chrome-url {
+            flex: 1;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 5px 12px;
+            font-size: .78rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow: hidden;
+        }
+
+        .chrome-url svg { flex-shrink: 0; }
+
+        .chrome-url-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--text-body);
+        }
+
+        .chrome-url-text em {
+            font-style: normal;
+            color: var(--terra);
+            font-weight: 500;
+        }
+
+        /* ── iFrame ──────────────────────────────── */
+        #demo-frame {
+            position: fixed;
+            top: calc(var(--bar-h) + var(--chrome-h));
+            left: 0; right: 0; bottom: 0;
+            border: none;
+            width: 100%;
+            height: calc(100% - var(--bar-h) - var(--chrome-h));
+        }
+
+        /* ── Loading ─────────────────────────────── */
+        #demo-loader {
+            position: fixed;
+            top: calc(var(--bar-h) + var(--chrome-h));
+            left: 0; right: 0; bottom: 0;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            z-index: 998;
+            transition: opacity .4s;
+        }
+        #demo-loader.hidden { opacity: 0; pointer-events: none; }
+
+        .loader-ring {
+            width: 36px; height: 36px;
+            border: 2px solid var(--border);
+            border-top-color: var(--terra);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loader-text {
+            font-size: .82rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Responsive ──────────────────────────── */
+        @media (max-width: 600px) {
+            .bar-project, .bar-sep { display: none; }
+            .bar-btn span { display: none; }
+            #browser-chrome { display: none; }
+            #demo-frame {
+                top: var(--bar-h);
+                height: calc(100% - var(--bar-h));
+            }
+            #demo-loader {
+                top: var(--bar-h);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Barre ÆRĀ ───────────────────────────────────────── -->
+    <header id="aera-bar">
+        <div class="bar-left">
+            <a href="index.html" class="bar-logo">ÆRĀ<span>.</span></a>
+            <div class="bar-sep"></div>
+            <div class="bar-project">
+                <strong>Morais Cleaning</strong>
+                <span>— Site vitrine multilingue</span>
+            </div>
+            <span class="demo-pill">Démo interactive</span>
+        </div>
+
+        <div class="bar-right">
+            <a href="index.html#realisations" class="bar-btn bar-btn-ghost">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Portfolio</span>
+            </a>
+            <a href="index.html#contact" class="bar-btn bar-btn-cta">
+                <span>Votre projet →</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ── Chrome navigateur ───────────────────────────────── -->
+    <div id="browser-chrome">
+        <div class="chrome-dots">
+            <div class="chrome-dot"></div>
+            <div class="chrome-dot"></div>
+            <div class="chrome-dot"></div>
+        </div>
+        <div class="chrome-nav">
+            <button id="btn-back" title="Retour" onclick="iframeNav('back')">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button id="btn-fwd" title="Suivant" onclick="iframeNav('fwd')">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button title="Recharger" onclick="iframeNav('reload')">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M13 8A5 5 0 1 1 8 3M13 3v5h-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        <div class="chrome-url">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <rect x="1" y="3" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.1"/>
+                <path d="M4 3V2.5a2 2 0 1 1 4 0V3" stroke="currentColor" stroke-width="1.1"/>
+            </svg>
+            <span class="chrome-url-text"><em>morais-cleaning.com</em> &nbsp;— démo hébergée sur <em>aera-studio.be</em></span>
+        </div>
+    </div>
+
+    <!-- ── Loader ───────────────────────────────────────────── -->
+    <div id="demo-loader">
+        <div class="loader-ring"></div>
+        <p class="loader-text">Chargement de la démo…</p>
+    </div>
+
+    <!-- ── iFrame Morais ────────────────────────────────────── -->
+    <iframe
+        id="demo-frame"
+        src="projets/morais-cleaning/index.html"
+        title="Démo Morais Cleaning — réalisé par ÆRĀ Studio"
+        allowfullscreen
+        loading="lazy">
+    </iframe>
+
+    <script>
+        var frame = document.getElementById('demo-frame');
+        var loader = document.getElementById('demo-loader');
+
+        frame.addEventListener('load', function(){
+            loader.classList.add('hidden');
+        });
+
+        function iframeNav(action){
+            try {
+                if(action === 'back') frame.contentWindow.history.back();
+                else if(action === 'fwd') frame.contentWindow.history.forward();
+                else if(action === 'reload') frame.contentWindow.location.reload();
+            } catch(e) {
+                if(action === 'reload') frame.src = frame.src;
+            }
+        }
+
+        // Thème sync
+        (function(){
+            var t = localStorage.getItem('aera-theme') ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
+</body>
+</html>

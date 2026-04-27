@@ -1,0 +1,310 @@
+{
+  "name": "Morais - Devis Complet (Airtable + Brevo)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "devis-complet",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook Devis Complet",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -900,
+        120
+      ],
+      "id": "webhook-devis-complet"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "nom",
+              "value": "={{$json.body.nom || ''}}"
+            },
+            {
+              "name": "societe",
+              "value": "={{$json.body.societe || ''}}"
+            },
+            {
+              "name": "email",
+              "value": "={{$json.body.email || ''}}"
+            },
+            {
+              "name": "telephone",
+              "value": "={{$json.body.telephone || ''}}"
+            },
+            {
+              "name": "adresse",
+              "value": "={{$json.body.adresse || ''}}"
+            },
+            {
+              "name": "ville",
+              "value": "={{$json.body.ville || ''}}"
+            },
+            {
+              "name": "service",
+              "value": "={{$json.body.service || ''}}"
+            },
+            {
+              "name": "surface",
+              "value": "={{ Number(String($json.body?.surface ?? 0).replace(',', '.').replace(/[^\\d.]/g, '')) || 0 }}"
+            },
+            {
+              "name": "frequence",
+              "value": "={{$json.body.frequence || ''}}"
+            },
+            {
+              "name": "urgence",
+              "value": "={{$json.body.urgence || ''}}"
+            },
+            {
+              "name": "message",
+              "value": "={{$json.body.message || ''}}"
+            },
+            {
+              "name": "options",
+              "value": "={{$json.body.options || ''}}"
+            },
+            {
+              "name": "horaire",
+              "value": "={{$json.body.horaire || ''}}"
+            },
+            {
+              "name": "estimation",
+              "value": "={{$json.body.estimation || ''}}"
+            },
+            {
+              "name": "page",
+              "value": "={{$json.body.page || ''}}"
+            },
+            {
+              "name": "source",
+              "value": "={{$json.body.source || 'devis-complet'}}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{$json.body.timestamp || $now}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Normalize Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        120
+      ],
+      "id": "normalize-devis-complet"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appVuLTqzGQilUXGw",
+          "mode": "list",
+          "cachedResultName": "Morais Cleaning -CRM",
+          "cachedResultUrl": "https://airtable.com/appVuLTqzGQilUXGw"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblEXNNTt7RgWh6lS",
+          "mode": "list",
+          "cachedResultName": "devis-complet",
+          "cachedResultUrl": "https://airtable.com/appVuLTqzGQilUXGw/tblEXNNTt7RgWh6lS"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nom": "={{$json.nom}}",
+            "Soci\u00e9t\u00e9": "={{$json.societe}}",
+            "Email": "={{$json.email}}",
+            "T\u00e9l\u00e9phone": "={{$json.telephone}}",
+            "Adresse": "={{$json.adresse}}",
+            "Service": "={{$json.service}}",
+            "Surface": "={{$json.surface}}",
+            "Fr\u00e9quence": "={{$json.frequence}}",
+            "Options": "={{$json.options}}",
+            "Urgence": "={{['1','true','yes','oui','on'].includes(String($json.urgence).toLowerCase())}}",
+            "Horaire": "={{$json.horaire}}",
+            "Estimation": "={{$json.estimation}}",
+            "Page": "={{$json.page}}",
+            "Source": "={{$json.source}}",
+            "Date r\u00e9ception": "={{$json.timestamp}}"
+          },
+          "attemptToConvertTypes": true,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "name": "Airtable - Create (devis-complet)",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        -420,
+        120
+      ],
+      "id": "airtable-devis-complet",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_WITH_YOUR_AIRTABLE_CRED_ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brevo.com/v3/smtp/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api-key",
+              "value": "={{$env.BREVO_API_KEY || ''}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{({\n  sender: { name: 'Morais Cleaning', email: 'info-devis@morais-cleaning.com' },\n  to: [{ email: 'info-devis@morais-cleaning.com' }],\n  replyTo: { email: $node['Normalize Data'].json.email, name: $node['Normalize Data'].json.nom },\n  subject: `NOUVEAU devis complet - ${$node['Normalize Data'].json.nom} (${$node['Normalize Data'].json.ville})`,\n  htmlContent: `<h2>Nouvelle demande de devis complet</h2>\n<p><strong>Nom :</strong> ${$node['Normalize Data'].json.nom}</p>\n<p><strong>Soci\u00e9t\u00e9 :</strong> ${$node['Normalize Data'].json.societe}</p>\n<p><strong>Email :</strong> ${$node['Normalize Data'].json.email}</p>\n<p><strong>T\u00e9l\u00e9phone :</strong> ${$node['Normalize Data'].json.telephone}</p>\n<p><strong>Adresse :</strong> ${$node['Normalize Data'].json.adresse}</p>\n<p><strong>Ville :</strong> ${$node['Normalize Data'].json.ville}</p>\n<p><strong>Service :</strong> ${$node['Normalize Data'].json.service}</p>\n<p><strong>Surface :</strong> ${$node['Normalize Data'].json.surface}</p>\n<p><strong>Fr\u00e9quence :</strong> ${$node['Normalize Data'].json.frequence}</p>\n<p><strong>Urgence :</strong> ${$node['Normalize Data'].json.urgence}</p>\n<p><strong>Options :</strong> ${$node['Normalize Data'].json.options}</p>\n<p><strong>Horaire :</strong> ${$node['Normalize Data'].json.horaire}</p>\n<p><strong>Estimation :</strong> ${$node['Normalize Data'].json.estimation}</p>\n<p><strong>Message :</strong></p>\n<p>${$node['Normalize Data'].json.message}</p>\n<hr>\n<p><strong>Source :</strong> ${$node['Normalize Data'].json.source}</p>\n<p><strong>Page :</strong> ${$node['Normalize Data'].json.page}</p>\n<p><strong>Date :</strong> ${$node['Normalize Data'].json.timestamp}</p>`\n})}}"
+      },
+      "name": "Brevo - Email Interne",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -160,
+        120
+      ],
+      "id": "brevo-interne-devis-complet"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brevo.com/v3/smtp/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api-key",
+              "value": "={{$env.BREVO_API_KEY || ''}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{({\n  sender: { name: 'Morais Cleaning', email: 'info-devis@morais-cleaning.com' },\n  to: [{ email: $node['Normalize Data'].json.email }],\n  subject: 'Morais Cleaning \u2013 Confirmation de votre demande de devis',\n  htmlContent: `<p>Bonjour ${$node['Normalize Data'].json.nom || ''},</p>\n<p>Nous avons bien re\u00e7u votre demande de devis. Notre \u00e9quipe vous recontactera rapidement.</p>\n<p><strong>Service :</strong> ${$node['Normalize Data'].json.service}</p>\n<p><strong>Ville :</strong> ${$node['Normalize Data'].json.ville}</p>\n<p>Merci,<br>Morais Cleaning</p>`\n})}}"
+      },
+      "name": "Brevo - Email Client",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        100,
+        120
+      ],
+      "id": "brevo-client-devis-complet"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true } }}",
+        "options": {}
+      },
+      "name": "Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        360,
+        120
+      ],
+      "id": "respond-ok-devis-complet"
+    }
+  ],
+  "connections": {
+    "Webhook Devis Complet": {
+      "main": [
+        [
+          {
+            "node": "Normalize Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Data": {
+      "main": [
+        [
+          {
+            "node": "Airtable - Create (devis-complet)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable - Create (devis-complet)": {
+      "main": [
+        [
+          {
+            "node": "Brevo - Email Interne",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brevo - Email Interne": {
+      "main": [
+        [
+          {
+            "node": "Brevo - Email Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brevo - Email Client": {
+      "main": [
+        [
+          {
+            "node": "Respond OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "local"
+}

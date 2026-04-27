@@ -1,0 +1,312 @@
+/* ═══════════════════════════════════════════════════════════════════
+   QUALITY BOOST — Performance · Animations · CSS propre
+   ÆRĀ Studio · 2025 — charger EN DERNIER
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════
+   1. SKIP LINK — accessibilité clavier
+   ══════════════════════════════════════════════════════════════ */
+.skip-link {
+    position: fixed;
+    top: -100%;
+    left: 16px;
+    z-index: 9999;
+    padding: 10px 22px;
+    background: var(--terra, #1A6EFF);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+    transition: top 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.skip-link:focus { top: 0; outline: none; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   2. CONTAIN — isolation layout pour les cards (perf)
+      Empêche les reflows de remonter dans le DOM
+   ══════════════════════════════════════════════════════════════ */
+.service-card,
+.valeur-card,
+.sol-card,
+.prest-card,
+.svc-xp-card,
+.faq-item,
+.pb-card,
+.methode-step,
+.pr-v2,
+.pr-xcard,
+.tm-kpi,
+.pf-hdr-stat {
+    contain: layout style;
+}
+
+/* Contain paint sur les éléments avec overflow:hidden */
+.pf-slide,
+.pf-viewport,
+.carousel-viewport,
+.hero-visual,
+.page-loader {
+    contain: paint;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   3. ANIMATIONS GPU — remplacement des keyframes non-GPU
+   ══════════════════════════════════════════════════════════════ */
+
+/* loaderSlide : left → translateX (GPU) */
+.loader-track::after {
+    left: 0 !important;
+    transform: translateX(-100%);
+    animation: loaderSlideGPU 1.6s var(--ease, cubic-bezier(.16,1,.3,1)) forwards !important;
+}
+@keyframes loaderSlideGPU {
+    to { transform: translateX(0); }
+}
+
+/* lineGrow : width → scaleX (GPU) */
+.hero-overline::before {
+    width: 32px !important;
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: lineGrowGPU 0.8s var(--ease, cubic-bezier(.16,1,.3,1)) 0.5s forwards !important;
+}
+@keyframes lineGrowGPU {
+    to { transform: scaleX(1); }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   4. WILL-CHANGE — sur les éléments animés fréquemment
+      (appliqué juste avant l'animation, retiré après)
+   ══════════════════════════════════════════════════════════════ */
+.hero-card,
+.hero-orb,
+.fab--wa,
+.float-devis {
+    will-change: transform;
+}
+
+/* Retirer will-change sur hover fini (économie VRAM) */
+.service-card:not(:hover),
+.valeur-card:not(:hover),
+.sol-card:not(:hover),
+.pf-arr:not(:hover) {
+    will-change: auto;
+}
+
+/* Forcer GPU sur les éléments qui transitionnent */
+.service-card,
+.valeur-card,
+.sol-card,
+.prest-card,
+.btn-primary,
+.btn-ghost,
+.nav-cta,
+.pf-btn-primary,
+.pf-btn-ghost,
+.pf-sl-cta-p,
+.pf-sl-cta-s {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   5. SCROLL BEHAVIOR — smooth natif
+   ══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   6. SURCHARGE !important inutiles dans styles.css
+   ══════════════════════════════════════════════════════════════ */
+
+/* footer-cta-title — déjà dans responsive-patch, renforcé ici */
+.footer-cta-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: #fff;
+    margin: 0;
+}
+
+/* nav-cta — color sans !important via spécificité augmentée */
+nav .nav-cta { color: #fff; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   7. ANIMATIONS AMÉLIORÉES — micro-interactions
+   ══════════════════════════════════════════════════════════════ */
+
+/* Cards — rebond plus expressif au hover */
+.service-card { transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.35s ease, border-color 0.25s ease, background 0.25s ease; }
+.valeur-card  { transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.35s ease, border-color 0.25s ease; }
+.sol-card     { transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.35s ease, border-color 0.25s ease; }
+.prest-card   { transition: transform 0.30s cubic-bezier(.34,1.56,.64,1), box-shadow 0.30s ease; }
+.svc-xp-card  { transition: transform 0.30s cubic-bezier(.34,1.56,.64,1), box-shadow 0.30s ease; }
+
+/* Boutons — shimmer au survol via pseudo-élément */
+.btn-primary,
+.pf-sl-cta-p,
+.pf-cta-btn-primary {
+    overflow: hidden;
+}
+.btn-primary::before,
+.pf-sl-cta-p::before,
+.pf-cta-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -75%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+.btn-primary:hover::before,
+.pf-sl-cta-p:hover::before,
+.pf-cta-btn-primary:hover::before {
+    left: 125%;
+}
+
+/* Hero cards — float organique plus prononcé */
+@keyframes floatA {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33%       { transform: translateY(-14px) rotate(0.4deg); }
+    66%       { transform: translateY(-6px) rotate(-0.3deg); }
+}
+@keyframes floatB {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    40%       { transform: translateY(-18px) rotate(-0.5deg); }
+    70%       { transform: translateY(-8px) rotate(0.4deg); }
+}
+@keyframes floatC {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50%       { transform: translateY(-10px) rotate(0.6deg); }
+}
+.hero-card-1 { animation: floatA 7s ease-in-out infinite; }
+.hero-card-2 { animation: floatB 9s ease-in-out infinite 1.2s; }
+.hero-card-3 { animation: floatC 6s ease-in-out infinite 0.6s; }
+
+/* Orb hero — pulsation plus douce */
+@keyframes orbBreath {
+    0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.9; }
+    50%       { transform: translate(-50%, -50%) scale(1.08); opacity: 0.65; }
+}
+.hero-orb { animation: orbBreath 8s ease-in-out infinite; }
+
+/* Titre hero — underline animé sur le mot "générer des clients" */
+.hero-title-line:nth-child(3) span::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--terra), var(--gold));
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: underlineReveal 0.8s cubic-bezier(.16,1,.3,1) 1.4s forwards;
+}
+.hero-title-line:nth-child(3) span { position: relative; display: inline-block; }
+@keyframes underlineReveal {
+    to { transform: scaleX(1); }
+}
+
+/* Stats hero — compteur animé (via JS) prêt */
+.hero-stat-num { transition: color 0.3s ease; }
+
+/* Marquee — accélération/décélération au hover */
+.stack-marquee:hover .marquee-track,
+.stack-marquee-2:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+/* Pf-nav — indicateur de progression de slide */
+.pf-nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--terra, #1A6EFF), var(--gold, #FFD060));
+    width: var(--nav-progress, 0%);
+    transition: width 0.65s cubic-bezier(.16,1,.3,1);
+    border-radius: 0 2px 0 0;
+}
+
+/* FAB — micro-bounce au chargement */
+@keyframes fabBounceIn {
+    0%   { transform: translateY(16px) scale(0.85); opacity: 0; }
+    60%  { transform: translateY(-6px) scale(1.04); opacity: 1; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.fab--wa.visible,
+.float-devis.visible {
+    animation: fabBounceIn 0.55s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+/* Bouton "Décrire mon projet" — pulse doux après 3s */
+@keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 4px 18px -4px rgba(26,101,255,.40); }
+    50%       { box-shadow: 0 4px 30px -2px rgba(26,101,255,.65), 0 0 0 6px rgba(26,101,255,.08); }
+}
+.hero-actions .btn-primary {
+    animation: ctaPulse 3s ease-in-out 3s infinite;
+}
+.hero-actions .btn-primary:hover {
+    animation: none;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   8. PERFORMANCE — optimisations finales
+   ══════════════════════════════════════════════════════════════ */
+
+/* Éviter reflow sur les éléments fixed */
+.page-loader,
+.custom-cursor,
+.float-devis,
+.fab--wa,
+#scrollProgress,
+.announce-bar {
+    transform: translateZ(0);
+}
+
+/* Clip images décoratives pour éviter les débordements */
+#accueil::after { contain: strict; }
+
+/* Lazy decode sur les iframes */
+.pf-brow-screen iframe,
+.rf-demo-iframe {
+    content-visibility: auto;
+}
+
+/* Réduire les repaints sur le carousel track */
+.pf-track,
+.carousel-track {
+    contain: layout;
+    transform: translateZ(0);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   9. REDUCED MOTION — respecter la préférence utilisateur
+   ══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    .hero-card-1, .hero-card-2, .hero-card-3 { animation: none; }
+    .hero-orb { animation: none; }
+    .hero-actions .btn-primary { animation: none; }
+    .fab--wa.visible, .float-devis.visible { animation: none; opacity: 1; transform: none; }
+    .btn-primary::before,
+    .pf-sl-cta-p::before,
+    .pf-cta-btn-primary::before { display: none; }
+    .loader-track::after { animation-duration: 0.01ms !important; }
+    .hero-overline::before { animation-duration: 0.01ms !important; }
+    html { scroll-behavior: auto; }
+}

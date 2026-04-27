@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mentions légales — ÆRĀ Studio, studio de création web à Bruxelles. Informations légales, RGPD, hébergement et politique de confidentialité.">
+    <meta name="robots" content="noindex, follow">
+    <title>Mentions légales — ÆRĀ Studio</title>
+    <link rel="canonical" href="https://aera-studio.be/mentions-legales.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        (function () {
+            var t = localStorage.getItem('aera-theme') ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
+    <style>
+        .ml-hero { padding: 140px 0 60px; border-bottom: 1px solid var(--border); }
+        .ml-eyebrow { display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--terra);font-family:'DM Sans',sans-serif;font-weight:500;margin-bottom:1.25rem; }
+        .ml-eyebrow::before { content:'';display:block;width:28px;height:1px;background:var(--terra); }
+        .ml-hero h1 { font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,5vw,3.6rem);font-weight:400;line-height:1.1;color:var(--text-heading);margin-bottom:1rem; }
+        .ml-hero h1 em { font-style:italic;color:var(--terra); }
+        .ml-hero-meta { display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.5rem;margin-top:1.5rem;font-size:.8rem;color:var(--text-muted);font-family:'DM Sans',sans-serif; }
+        .ml-hero-meta span::before { content:'·';margin-right:1.5rem; }
+        .ml-hero-meta span:first-child::before { display:none; }
+        .ml-body { display:grid;grid-template-columns:190px 1fr;gap:0 4rem;padding:60px 0 100px;align-items:start; }
+        @media(max-width:720px){.ml-body{grid-template-columns:1fr}.ml-toc{display:none}}
+        .ml-toc { position:sticky;top:100px; }
+        .ml-toc-title { font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-weight:500;margin-bottom:1rem; }
+        .ml-toc a { display:block;font-size:.82rem;font-family:'DM Sans',sans-serif;color:var(--text-muted);text-decoration:none;padding:.35rem 0 .35rem .75rem;border-left:2px solid transparent;transition:color .2s,border-color .2s;line-height:1.4; }
+        .ml-toc a:hover,.ml-toc a.active { color:var(--terra);border-left-color:var(--terra); }
+        .ml-sections { display:flex;flex-direction:column; }
+        .ml-section { padding:2.5rem 0;border-bottom:1px solid var(--border); }
+        .ml-section:last-of-type { border-bottom:none; }
+        .ml-section-header { display:flex;align-items:baseline;gap:1rem;margin-bottom:1.25rem; }
+        .ml-num { font-size:.7rem;font-family:'DM Sans',sans-serif;color:var(--terra);font-weight:500;letter-spacing:.1em;flex-shrink:0;padding-top:2px; }
+        .ml-section h2 { font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;color:var(--text-heading);margin:0; }
+        .ml-section p,.ml-section li { font-family:'DM Sans',sans-serif;font-size:.9rem;line-height:1.9;color:var(--text-body); }
+        .ml-section p+p { margin-top:.85rem; }
+        .ml-section a { color:var(--terra);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s; }
+        .ml-section a:hover { border-bottom-color:var(--terra); }
+        .ml-card { background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.5rem 1.75rem;margin-top:1.25rem; }
+        .ml-grid { display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 2rem; }
+        @media(max-width:500px){.ml-grid{grid-template-columns:1fr}}
+        .ml-field label { display:block;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-weight:500;margin-bottom:.3rem; }
+        .ml-field span,.ml-field a { font-size:.88rem;font-family:'DM Sans',sans-serif;color:var(--text-body);line-height:1.5; }
+        .ml-field a { color:var(--terra); }
+        .ml-badge { display:inline-flex;align-items:center;gap:.4rem;background:color-mix(in srgb,var(--terra) 10%,transparent);color:var(--terra);font-size:.72rem;font-family:'DM Sans',sans-serif;font-weight:500;letter-spacing:.04em;padding:.25rem .75rem;border-radius:20px;border:1px solid color-mix(in srgb,var(--terra) 25%,transparent);margin-top:1rem; }
+        .ml-badge::before { content:'';width:6px;height:6px;border-radius:50%;background:var(--terra); }
+        .ml-rights { display:grid;grid-template-columns:1fr 1fr;gap:.55rem 1.5rem;margin-top:1rem;list-style:none;padding:0; }
+        @media(max-width:500px){.ml-rights{grid-template-columns:1fr}}
+        .ml-rights li { display:flex;align-items:flex-start;gap:.5rem;font-size:.86rem;font-family:'DM Sans',sans-serif;color:var(--text-body); }
+        .ml-rights li::before { content:'→';color:var(--terra);flex-shrink:0;font-size:.8rem;margin-top:2px; }
+        .ml-table { width:100%;border-collapse:collapse;margin-top:1.25rem;font-size:.84rem;font-family:'DM Sans',sans-serif; }
+        .ml-table th { text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;padding:.5rem .75rem;border-bottom:1px solid var(--border); }
+        .ml-table td { padding:.65rem .75rem;color:var(--text-body);border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent);line-height:1.5; }
+        .ml-table tr:last-child td { border-bottom:none; }
+        .pill { display:inline-block;padding:.15rem .65rem;border-radius:12px;font-size:.72rem;font-weight:500; }
+        .pill-green { background:color-mix(in srgb,#22c55e 12%,transparent);color:#16a34a; }
+        [data-theme="dark"] .pill-green { color:#4ade80; }
+        .ml-back { display:inline-flex;align-items:center;gap:.5rem;color:var(--terra);text-decoration:none;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);width:100%;transition:gap .2s; }
+        .ml-back:hover { gap:.9rem; }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar" role="navigation" aria-label="Navigation principale">
+        <div class="nav-container">
+            <a href="index.html" class="logo" aria-label="ÆRĀ Studio — retour accueil">ÆRĀ<span>.</span></a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème" title="Mode clair / sombre">
+                <span class="theme-toggle-icon">
+                    <svg class="icon-sun" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <circle cx="9" cy="9" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M9 1v2M9 15v2M1 9h2M15 9h2M3.22 3.22l1.42 1.42M13.36 13.36l1.42 1.42M3.22 14.78l1.42-1.42M13.36 4.64l1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="icon-moon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M15 10.5A7 7 0 017.5 3a7 7 0 000 12A7 7 0 0015 10.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+            </button>
+            <ul class="nav-links" id="navLinks" role="list">
+                <li><a href="index.html#accueil">Accueil</a></li>
+                <li><a href="index.html#services">Savoir-faire</a></li>
+                <li><a href="index.html#realisations">Réalisations</a></li>
+                <li><a href="index.html#contact" class="nav-cta">Échanger</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="ml-hero">
+        <div class="container" style="max-width:900px;">
+            <p class="ml-eyebrow">Informations légales</p>
+            <h1>Mentions <em>légales</em></h1>
+            <div class="ml-hero-meta">
+                <span>Site : aera-studio.be</span>
+                <span>Mis à jour le 21 mars 2026</span>
+                <span>Droit belge applicable</span>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="container" style="max-width:900px;">
+            <div class="ml-body">
+
+                <aside class="ml-toc" aria-label="Sommaire">
+                    <p class="ml-toc-title">Sommaire</p>
+                    <a href="#editeur">Éditeur du site</a>
+                    <a href="#hebergement">Hébergement</a>
+                    <a href="#propriete">Propriété intellectuelle</a>
+                    <a href="#rgpd">Données personnelles</a>
+                    <a href="#cookies">Cookies</a>
+                    <a href="#responsabilite">Responsabilité</a>
+                    <a href="#mediation">Médiation</a>
+                    <a href="#droit">Droit applicable</a>
+                </aside>
+
+                <div class="ml-sections">
+
+                    <section class="ml-section" id="editeur">
+                        <div class="ml-section-header">
+                            <span class="ml-num">01</span>
+                            <h2>Éditeur du site</h2>
+                        </div>
+                        <p>Le présent site <strong>aera-studio.be</strong> est édité par ÆRĀ Studio, projet indépendant de création web et d'automatisation, dont le détenteur et responsable est <strong>Issam</strong>. L'activité est exercée sous l'égide de Smart Cooperative, utilisée à titre de véhicule de facturation légal — Smart ne détient, ne gère et ne co-possède aucune part du projet.</p>
+                        <div class="ml-card">
+                            <div class="ml-grid">
+                                <div class="ml-field">
+                                    <label>Nom commercial</label>
+                                    <span>ÆRĀ Studio</span>
+                                </div>
+                                <div class="ml-field">
+                                    <label>Détenteur &amp; responsable du projet</label>
+                                    <span>Issam</span>
+                                </div>
+                                <div class="ml-field">
+                                    <label>Véhicule légal de facturation</label>
+                                    <span>Smart Cooperative SC</span>
+                                </div>
+                                <div class="ml-field">
+                                    <label>BCE / TVA (Smart Cooperative)</label>
+                                    <span>BE 0806.201.741</span>
+                                </div>
+                                <div class="ml-field">
+                                    <label>Adresse administrative</label>
+                                    <span>Rue Coenraets 72<br>1060 Saint-Gilles, Bruxelles</span>
+                                </div>
+                                <div class="ml-field">
+                                    <label>Pays</label>
+                                    <span>Belgique</span>
+                                </div>
+                                <div class="ml-field">
+                                    <label>Email</label>
+                                    <a href="mailto:issam.dev@aera-studio.com">issam.dev@aera-studio.com</a>
+                                </div>
+                                <div class="ml-field">
+                                    <label>Téléphone</label>
+                                    <a href="tel:+32451069980">+32 451 06 99 80</a>
+                                </div>
+                            </div>
+                            <span class="ml-badge">Smart Cooperative — véhicule de facturation uniquement, sans co-détention du projet</span>
+                        </div>
+                    </section>
+
+                    <section class="ml-section" id="hebergement">
+                        <div class="ml-section-header">
+                            <span class="ml-num">02</span>
+                            <h2>Hébergement</h2>
+                        </div>
+                        <p>Le site aera-studio.be est hébergé par la société Hostinger International Ltd.</p>
+                        <div class="ml-card">
+                            <div class="ml-grid">
+                                <div class="ml-field">
+                                    <label>Hébergeur</label>
+                                    <span>Hostinger International Ltd.</span>
+                                </div>
+                                <div class="ml-field">
+                                    <label>Site web</label>
+                                    <a href="https://www.hostinger.com" target="_blank" rel="noopener noreferrer">hostinger.com</a>
+                                </div>
+                                <div class="ml-field">
+                                    <label>Siège social</label>
+                                    <span>61 Lordou Vironos Street<br>6023 Larnaca, Chypre</span>
+                                </div>
+                                <div class="ml-field">
+                                    <label>Serveurs</label>
+                                    <span>Union Européenne</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="ml-section" id="propriete">
+                        <div class="ml-section-header">
+                            <span class="ml-num">03</span>
+                            <h2>Propriété intellectuelle</h2>
+                        </div>
+                        <p>L'ensemble des éléments constituant ce site — textes, typographies, graphismes, animations, code source, structure et organisation des pages — est la propriété exclusive d'ÆRĀ Studio, sauf mention contraire explicite.</p>
+                        <p>Toute reproduction, représentation, modification, adaptation, traduction ou exploitation partielle ou totale de ces éléments, par quelque procédé que ce soit, sans autorisation écrite préalable d'ÆRĀ Studio, est strictement interdite et constitue une contrefaçon sanctionnée par le droit belge et le droit européen applicable.</p>
+                        <p>Les marques, logos et signes distinctifs reproduits sur ce site sont la propriété de leurs détenteurs respectifs.</p>
+                    </section>
+
+                    <section class="ml-section" id="rgpd">
+                        <div class="ml-section-header">
+                            <span class="ml-num">04</span>
+                            <h2>Données personnelles (RGPD)</h2>
+                        </div>
+                        <p>ÆRĀ Studio, en qualité de responsable de traitement, collecte et traite vos données personnelles dans le strict respect du Règlement Général sur la Protection des Données (RGPD — UE 2016/679) et de la loi belge du 30 juillet 2018 relative à la protection des personnes physiques à l'égard des traitements de données à caractère personnel.</p>
+                        <p><strong>Données collectées</strong> — Via le formulaire de contact : nom et prénom, adresse email, numéro de téléphone, nom de l'entreprise, message libre. Ces données sont transmises volontairement par l'utilisateur.</p>
+                        <p><strong>Finalité du traitement</strong> — Répondre aux demandes de contact ou de devis, assurer le suivi de la relation commerciale. Aucune vente, cession ou transmission à des tiers à des fins commerciales.</p>
+                        <p><strong>Durée de conservation</strong> — Maximum 3 ans à compter du dernier contact ou de la fin de la relation commerciale.</p>
+                        <p><strong>Vos droits</strong> — Conformément au RGPD, vous disposez des droits suivants :</p>
+                        <ul class="ml-rights">
+                            <li>Droit d'accès à vos données</li>
+                            <li>Droit de rectification</li>
+                            <li>Droit à l'effacement (droit à l'oubli)</li>
+                            <li>Droit à la limitation du traitement</li>
+                            <li>Droit à la portabilité des données</li>
+                            <li>Droit d'opposition au traitement</li>
+                        </ul>
+                        <p style="margin-top:1rem;">Pour exercer ces droits : <a href="mailto:issam.dev@aera-studio.com">issam.dev@aera-studio.com</a></p>
+                        <p>En cas de réponse insatisfaisante, vous pouvez introduire une réclamation auprès de l'<strong>Autorité de protection des données (APD)</strong> — <a href="https://www.autoriteprotectiondonnees.be" target="_blank" rel="noopener noreferrer">autoriteprotectiondonnees.be</a> — Rue de la Presse 35, 1000 Bruxelles.</p>
+                    </section>
+
+                    <section class="ml-section" id="cookies">
+                        <div class="ml-section-header">
+                            <span class="ml-num">05</span>
+                            <h2>Politique relative aux cookies</h2>
+                        </div>
+                        <p>Ce site utilise un minimum strict de cookies, tous de nature technique et fonctionnelle. Aucun cookie publicitaire, aucun tracker tiers ni aucun outil d'analyse comportementale n'est présent.</p>
+                        <table class="ml-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Finalité</th>
+                                    <th>Durée</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>aera-theme</code></td>
+                                    <td>Mémorisation du thème choisi (clair / sombre)</td>
+                                    <td>Persistant (localStorage)</td>
+                                    <td><span class="pill pill-green">Fonctionnel</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="margin-top:1rem;">Ce cookie étant strictement nécessaire au bon fonctionnement de l'interface, aucun consentement supplémentaire n'est requis au sens de la directive ePrivacy. Vous pouvez le supprimer à tout moment via les paramètres de votre navigateur.</p>
+                    </section>
+
+                    <section class="ml-section" id="responsabilite">
+                        <div class="ml-section-header">
+                            <span class="ml-num">06</span>
+                            <h2>Limitation de responsabilité</h2>
+                        </div>
+                        <p>ÆRĀ Studio s'efforce de maintenir les informations publiées sur ce site à jour, exactes et complètes. Toutefois, leur exactitude, exhaustivité ou actualité ne peuvent être garanties, les contenus pouvant être modifiés à tout moment sans préavis.</p>
+                        <p>ÆRĀ Studio ne saurait être tenu responsable des dommages directs ou indirects résultant de l'utilisation de ce site, de l'impossibilité d'y accéder, ou de l'accès à des sites tiers via des liens hypertextes. La responsabilité d'ÆRĀ Studio ne pourra pas être engagée en cas d'indisponibilité technique, quelle qu'en soit la cause.</p>
+                    </section>
+
+                    <section class="ml-section" id="mediation">
+                        <div class="ml-section-header">
+                            <span class="ml-num">07</span>
+                            <h2>Médiation et règlement des litiges</h2>
+                        </div>
+                        <p>En cas de litige relatif à une prestation commerciale, nous vous invitons à nous contacter en premier lieu à l'adresse <a href="mailto:issam.dev@aera-studio.com">issam.dev@aera-studio.com</a> afin de rechercher une solution amiable.</p>
+                        <p>Conformément au Règlement (UE) n° 524/2013, la Commission européenne met à disposition une plateforme de règlement en ligne des litiges (RLL) accessible à : <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">ec.europa.eu/consumers/odr</a></p>
+                        <p>Pour les consommateurs belges : <a href="https://www.mediationconsommateur.be" target="_blank" rel="noopener noreferrer">mediationconsommateur.be</a></p>
+                    </section>
+
+                    <section class="ml-section" id="droit">
+                        <div class="ml-section-header">
+                            <span class="ml-num">08</span>
+                            <h2>Droit applicable et juridiction</h2>
+                        </div>
+                        <p>Le présent site, ses contenus et les présentes mentions légales sont régis par le <strong>droit belge</strong>. En cas de litige non résolu à l'amiable, les tribunaux de l'arrondissement judiciaire de <strong>Bruxelles</strong> seront seuls compétents.</p>
+                        <p>Ces mentions légales peuvent être modifiées à tout moment par ÆRĀ Studio afin de se conformer à toute évolution législative ou réglementaire applicable.</p>
+                    </section>
+
+                    <a href="index.html" class="ml-back">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Retour au site
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© <span id="yr"></span> ÆRĀ Studio. Tous droits réservés.</p>
+                <p>Fait avec soin à Bruxelles</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+    <script src="js/main.js" defer></script>
+    <script>
+        (function () {
+            const links = document.querySelectorAll('.ml-toc a');
+            const sections = document.querySelectorAll('.ml-section[id]');
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        links.forEach(l => l.classList.remove('active'));
+                        const a = document.querySelector('.ml-toc a[href="#' + e.target.id + '"]');
+                        if (a) a.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-30% 0px -60% 0px' });
+            sections.forEach(s => obs.observe(s));
+        })();
+    </script>
+</body>
+</html>

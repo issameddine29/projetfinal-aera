@@ -1,0 +1,449 @@
+/* ================================================================
+   ÆRĀ STUDIO — interactions-premium.css  v2.0  (corrigé)
+   ================================================================
+   NE redéfinit PAS : reveal-card, hero-card hover, .fab,
+   #scrollProgress width, .faq-a max-height, .faq-toggle
+   Tout ce qui existe dans styles.css est ÉTENDU, pas écrasé.
+   ================================================================ */
+
+/* ── HERO — gradient animé sur le texte mis en valeur ─────────── */
+.hero-title em {
+  background: linear-gradient(135deg, var(--terra) 0%, var(--gold) 50%, var(--terra-light) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: ip-gradient 4s ease infinite;
+}
+@keyframes ip-gradient {
+  0%,100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* ── HERO BADGE — glassmorphism + flottement ───────────────────── */
+.hero-avail-badge {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-warm);
+  animation: ip-badge-float 3.2s ease-in-out infinite;
+}
+@keyframes ip-badge-float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* ── NAV — glassmorphism étendu (complète #navbar de styles.css) ─ */
+#navbar {
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+
+/* ── LOGO — shimmer au survol ──────────────────────────────────── */
+.logo {
+  position: relative;
+  overflow: hidden;
+}
+.logo::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -110%;
+  width: 55%; height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.logo:hover::after { left: 160%; }
+
+/* ── BUTTONS — shimmer + lift (classes déjà ajoutées via JS) ───── */
+/* Les classes .ix-liquid et .ix-shimmer sont injectées par interactions.js */
+/* Ici on améliore les boutons ghost */
+.btn-ghost {
+  transition: transform 0.35s var(--ease), box-shadow 0.35s ease, border-color 0.35s ease !important;
+}
+.btn-ghost:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(26,101,255,0.14) !important;
+}
+
+/* ── CARDS — halo coin au hover (complète les cartes existantes) ─ */
+.svc-card::before,
+.prest-card::before {
+  content: '';
+  position: absolute;
+  top: -30px; left: -30px;
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,101,255,0.12) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+.svc-card:hover::before,
+.prest-card:hover::before {
+  opacity: 1;
+  transform: scale(1.6);
+}
+
+/* ── HERO CARDS — glassmorphism premium (étend les règles par thème) */
+.hero-card {
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+}
+/* NE pas surcharger hero-card:hover — géré par interactions.js (parallax) */
+
+/* ── FAQ — états visuels premium (complète .faq-item.active) ───── */
+/* ix-open est ajouté par interactions.js en sync avec .active */
+.faq-item.ix-open,
+.faq-item.active {
+  background: rgba(26,101,255,0.03);
+}
+
+/* ── FORMULES — card featured améliorée ────────────────────────── */
+.pr-v2--featured {
+  border: 1px solid rgba(26,101,255,0.32) !important;
+}
+/* Halo hover */
+.pr-v2--featured::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(26,101,255,0.06) 0%, rgba(0,184,217,0.04) 100%);
+  opacity: 1;
+  pointer-events: none;
+}
+.pr-v2--featured:hover {
+  box-shadow: 0 20px 60px rgba(26,101,255,0.22), var(--shadow-terra) !important;
+}
+
+/* ── CONTACT BUTTONS — lift + glow ─────────────────────────────── */
+.cpanel-gsm-cta:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 12px 40px rgba(26,101,255,0.32) !important;
+}
+.cpanel-wa-cta:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 12px 40px rgba(37,211,102,0.32) !important;
+}
+
+/* ── FLOATING BUTTONS — micro-interactions améliorées ──────────── */
+/* Étend .fab:hover de styles.css (transform:-3px → -4px) */
+.fab--devis:hover,
+.fab--wa:hover {
+  transform: translateY(-4px) scale(1.04) !important;
+}
+.fab:active {
+  transform: scale(0.96) !important;
+  transition-duration: 0.08s !important;
+}
+
+/* ── FOOTER CTA BAND — orb animé en arrière-plan ───────────────── */
+.footer-cta-band {
+  position: relative;
+  overflow: hidden;
+}
+.footer-cta-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 50%, rgba(26,101,255,0.16) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 50%, rgba(0,184,217,0.10) 0%, transparent 55%);
+  animation: ip-footer-orb 7s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes ip-footer-orb {
+  from { transform: translateX(-4%) scale(1); }
+  to   { transform: translateX(4%) scale(1.04); }
+}
+
+/* ── SCROLL PROGRESS — glow (n'écrase pas width gérée par main.js) */
+#scrollProgress {
+  box-shadow: 0 0 6px var(--terra);
+  /* background et width sont gérés par main.js + interactions.js module 12 */
+}
+
+/* ── LOADER — pulse amélioré ────────────────────────────────────── */
+.loader-logo {
+  animation: ip-loader-pulse 1.8s ease-in-out infinite;
+}
+@keyframes ip-loader-pulse {
+  0%,100% { opacity: 1; letter-spacing: 8px; }
+  50%      { opacity: 0.72; letter-spacing: 13px; }
+}
+
+/* ── MARQUEE — fade bords ───────────────────────────────────────── */
+.stack-marquee-2 {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image:         linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+/* ── HERO ORB — respiration améliorée ──────────────────────────── */
+.hero-orb {
+  animation: ip-orb-breathe 5s ease-in-out infinite !important;
+}
+@keyframes ip-orb-breathe {
+  0%,100% { transform: scale(1) translateY(0);    opacity: 0.50; }
+  40%     { transform: scale(1.08) translateY(-12px); opacity: 0.65; }
+  70%     { transform: scale(0.95) translateY(6px);   opacity: 0.44; }
+}
+
+/* ── TÉMOIGNAGE ACCENT — shimmer ────────────────────────────────── */
+.tm-accent {
+  animation: ip-accent-shimmer 3s ease-in-out infinite;
+}
+@keyframes ip-accent-shimmer {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.52; transform: scaleX(0.82); }
+}
+
+/* ── TOOL TAGS — hover coloré ───────────────────────────────────── */
+.sol-tool-tag,
+.phi-stack-tag,
+.auto-tool-tag {
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  cursor: default;
+}
+.sol-tool-tag:hover,
+.phi-stack-tag:hover,
+.auto-tool-tag:hover {
+  background: var(--terra);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ── PROOF STATS — glow au hover ────────────────────────────────── */
+.sol-stat {
+  display: inline-block;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.sol-stat-wrap:hover .sol-stat {
+  color: var(--terra);
+  text-shadow: 0 0 28px rgba(26,101,255,0.45);
+}
+
+/* ── CUSTOM SCROLLBAR ───────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  {
+  background: linear-gradient(180deg, var(--terra), var(--gold));
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--terra); }
+
+/* ── OVERLINE ANIMÉE — sections sol/phi ────────────────────────── */
+.sol-overline-line,
+.phi-overline-line {
+  display: inline-block;
+  width: 32px; height: 1px;
+  background: var(--terra);
+  transform-origin: left;
+  animation: ip-line-grow 0.9s var(--ease) forwards;
+}
+@keyframes ip-line-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ── MÉTHODE — step-line animate quand revealed ─────────────────── */
+.step-line {
+  transform-origin: top;
+  animation: ip-step-grow 1.4s var(--ease) forwards;
+  animation-play-state: paused;
+}
+.methode-step.revealed .step-line {
+  animation-play-state: running;
+}
+@keyframes ip-step-grow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+/* ── REVEAL CARD — blur entrant (étend .js-ready .reveal-card) ─── */
+.js-ready .reveal-card {
+  filter: blur(3px);
+}
+.js-ready .reveal-card.revealed {
+  filter: blur(0) !important;
+  transition:
+    opacity 0.75s var(--ease),
+    transform 0.75s var(--ease),
+    filter 0.55s ease !important;
+}
+
+/* ── MOBILE — allègement animations ────────────────────────────── */
+@media (max-width: 768px) {
+  .logo::after            { display: none; }
+  .footer-cta-band::before{ animation: none; }
+  .hero-avail-badge       { animation: none; }
+}
+
+/* ── REDUCED MOTION ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb,
+  .hero-avail-badge,
+  .loader-logo,
+  .tm-accent,
+  .footer-cta-band::before,
+  .hero-title em {
+    animation: none !important;
+  }
+  .hero-title em {
+    -webkit-text-fill-color: var(--terra);
+    background: none;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   HERO CANVAS — animation background
+══════════════════════════════════════════════════════════════════ */
+
+/* Canvas hero positionné en absolu dans #accueil */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Le heroStars existant passe derrière le canvas */
+#heroStars {
+  z-index: 0 !important;
+}
+
+/* Tous les enfants directs du hero-inner au-dessus du canvas */
+.hero-inner {
+  z-index: 2;
+  position: relative;
+}
+
+/* ── HERO — améliorations background ─────────────────────────── */
+
+/* Mode sombre : overlay gradient plus profond */
+[data-theme="dark"] #accueil::before {
+  background: linear-gradient(
+    160deg,
+    rgba(2, 5, 18, 0.72) 0%,
+    rgba(3, 8, 30, 0.40) 45%,
+    rgba(0, 10, 30, 0.62) 100%
+  ) !important;
+}
+
+/* Mode clair : overlay délicat */
+[data-theme="light"] #accueil::before,
+:root #accueil::before {
+  background: linear-gradient(
+    160deg,
+    rgba(215, 225, 248, 0.55) 0%,
+    rgba(232, 236, 246, 0.28) 45%,
+    rgba(200, 215, 244, 0.42) 100%
+  ) !important;
+}
+
+/* Orb ::after — plus grand, plus lumineux */
+#accueil::after {
+  width: 750px !important;
+  height: 750px !important;
+  top: -20% !important;
+  right: -10% !important;
+  animation: ip-hero-orb-float 10s ease-in-out infinite,
+             ip-hero-orb-pulse 7s ease-in-out infinite !important;
+}
+[data-theme="dark"] #accueil::after {
+  background: radial-gradient(circle,
+    rgba(77, 158, 255, 0.18) 0%,
+    rgba(0, 195, 230, 0.06) 40%,
+    transparent 70%
+  ) !important;
+}
+[data-theme="light"] #accueil::after {
+  background: radial-gradient(circle,
+    rgba(26, 101, 255, 0.10) 0%,
+    rgba(0, 150, 200, 0.04) 40%,
+    transparent 70%
+  ) !important;
+}
+@keyframes ip-hero-orb-float {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  33%     { transform: translateY(-20px) rotate(3deg); }
+  66%     { transform: translateY(10px) rotate(-2deg); }
+}
+@keyframes ip-hero-orb-pulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.6; }
+}
+
+/* ── HERO TITLE — lettre par lettre sur la 3e ligne ─────────── */
+.hero-title-line:nth-child(3) span {
+  background: linear-gradient(135deg,
+    var(--terra) 0%,
+    var(--gold) 50%,
+    var(--terra-light, #88B8FF) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: slideReveal 1.1s var(--ease) 0.55s forwards,
+             ip-gradient 5s ease 1.8s infinite !important;
+}
+
+/* ── HERO OVERLINE — ligne décorative animée ────────────────── */
+.hero-overline::before {
+  animation: ip-overline-enter 0.8s var(--ease) 0.8s both;
+}
+@keyframes ip-overline-enter {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+
+/* ── HERO STAT NUMBERS — glow au count ─────────────────────── */
+.hero-stat-num.done-counting {
+  animation: ip-stat-glow 0.6s ease forwards;
+}
+@keyframes ip-stat-glow {
+  0%   { text-shadow: 0 0 0 transparent; }
+  50%  { text-shadow: 0 0 24px rgba(26,101,255,0.5); }
+  100% { text-shadow: none; }
+}
+
+/* ── HERO CARDS — animation d'entrée décalée ───────────────── */
+.hero-card-1 { animation: ip-card-enter 1s var(--ease) 0.8s both; }
+.hero-card-2 { animation: ip-card-enter 1s var(--ease) 1.0s both; }
+.hero-card-3 { animation: ip-card-enter 1s var(--ease) 1.2s both; }
+@keyframes ip-card-enter {
+  from { opacity: 0; transform: translateX(40px) translateY(10px); }
+  to   { opacity: 1; }
+}
+
+/* ── HERO INNER — padding bottom pour le scroll hint ────────── */
+#accueil .hero-inner {
+  padding-bottom: 80px !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PERFORMANCE — will-change sur éléments animés clés
+══════════════════════════════════════════════════════════════════ */
+.hero-orb,
+.hero-card,
+#accueil::after {
+  will-change: transform, opacity;
+}
+
+.sol-card,
+.prest-card,
+.pr-v2 {
+  will-change: transform;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SITEMAP — section #methode step-line z-index fix
+══════════════════════════════════════════════════════════════════ */
+.methode-step {
+  position: relative;
+}
+

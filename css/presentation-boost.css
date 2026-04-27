@@ -1,0 +1,589 @@
+/* ═══════════════════════════════════════════════════════════════════
+   PRESENTATION BOOST — Animations · Présentation · UX Premium
+   ÆRĀ Studio · 2025 — charger EN DERNIER
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════
+   1. HERO — AMÉLIORATIONS VISUELLES
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Fond hero — maillage géométrique animé ── */
+#accueil::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(26,101,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,101,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 60% 40%, black 0%, transparent 75%);
+    animation: gridDrift 18s ease-in-out infinite;
+}
+[data-theme="dark"] #accueil::before {
+    background-image:
+        linear-gradient(rgba(80,148,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(80,148,255,0.06) 1px, transparent 1px);
+}
+@keyframes gridDrift {
+    0%, 100% { background-position: 0 0; opacity: 1; }
+    50%       { background-position: 30px 15px; opacity: 0.6; }
+}
+
+/* ── Hero titre — taille augmentée + lettre-espacement ── */
+.hero-title {
+    font-size: clamp(2.8rem, 5.5vw, 4rem);
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+}
+
+/* ── Ligne 3 (générer des clients) — couleur + style encore plus marqués ── */
+.hero-title-line:nth-child(3) span {
+    color: var(--terra);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 1.08em;
+}
+
+/* ── Overline — badge disponibilité amélioré ── */
+.hero-avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px 5px 9px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+[data-theme="light"] .hero-avail-badge {
+    background: rgba(26,101,255,0.08);
+    border: 1px solid rgba(26,101,255,0.18);
+    color: #1A55CC;
+}
+[data-theme="dark"] .hero-avail-badge {
+    background: rgba(80,148,255,0.10);
+    border: 1px solid rgba(80,148,255,0.22);
+    color: var(--terra-light);
+}
+/* Shimmer sur le badge */
+.hero-avail-badge::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: translateX(-100%);
+    animation: badgeShimmer 3s ease-in-out 2s infinite;
+}
+@keyframes badgeShimmer {
+    0%   { transform: translateX(-100%); }
+    40%  { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ── Dot disponibilité — pulse plus visible ── */
+.hero-avail-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    display: inline-block;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 0 rgba(34,197,94,0.6);
+    animation: availPulse 2.2s ease-out infinite;
+}
+@keyframes availPulse {
+    0%   { box-shadow: 0 0 0 0   rgba(34,197,94,0.7); }
+    70%  { box-shadow: 0 0 0 8px rgba(34,197,94,0.0); }
+    100% { box-shadow: 0 0 0 0   rgba(34,197,94,0.0); }
+}
+
+/* ── Hero subtitle — légèrement plus grande ── */
+.hero-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    max-width: 500px;
+}
+
+/* ── Bouton primaire — dégradé animé ── */
+.btn-primary {
+    background: linear-gradient(135deg, var(--ink) 0%, color-mix(in srgb, var(--ink), var(--terra) 20%) 100%);
+    border-color: transparent;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 16px 38px;
+}
+[data-theme="dark"] .btn-primary {
+    background: linear-gradient(135deg, var(--terra-dark) 0%, var(--terra) 100%);
+    border-color: transparent;
+    box-shadow: 0 4px 24px rgba(80,148,255,0.28), 0 1px 0 rgba(255,255,255,0.1) inset;
+}
+[data-theme="dark"] .btn-primary:hover {
+    box-shadow: 0 8px 32px rgba(80,148,255,0.45), 0 1px 0 rgba(255,255,255,0.15) inset;
+}
+
+/* ── Bouton ghost — bordure dégradée ── */
+.btn-ghost {
+    border-color: var(--border-warm);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: border-color 0.3s ease, color 0.3s ease, transform 0.25s ease, background 0.3s ease;
+}
+
+/* ── Stats hero — chiffres plus grands et plus dramatiques ── */
+.hero-stat-num {
+    font-size: 3rem;
+    font-weight: 200;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--ink) 0%, var(--terra) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="dark"] .hero-stat-num {
+    background: linear-gradient(135deg, #fff 0%, var(--terra-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.hero-stat-num sup {
+    font-size: 1.2rem;
+    -webkit-text-fill-color: var(--terra);
+}
+[data-theme="dark"] .hero-stat-num sup {
+    -webkit-text-fill-color: var(--terra-light);
+}
+
+/* ── Cards héro — verre premium amélioré ── */
+.hero-card {
+    padding: 24px 28px;
+    border-radius: 18px;
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease;
+}
+[data-theme="light"] .hero-card {
+    background: rgba(255,255,255,0.75);
+    border: 1px solid rgba(26,101,255,0.14);
+    box-shadow:
+        0 8px 32px -8px rgba(26,101,255,0.12),
+        0 0 0 1px rgba(255,255,255,0.9) inset,
+        0 1px 0 rgba(255,255,255,0.8) inset;
+    backdrop-filter: blur(20px) saturate(1.8);
+}
+[data-theme="dark"] .hero-card {
+    background: rgba(6,9,22,0.78);
+    border: 1px solid rgba(80,148,255,0.16);
+    box-shadow:
+        0 16px 48px -12px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(255,255,255,0.04) inset;
+    backdrop-filter: blur(24px) saturate(1.4);
+}
+.hero-card:hover {
+    transform: translateY(-8px) scale(1.04);
+}
+[data-theme="light"] .hero-card:hover {
+    box-shadow:
+        0 24px 56px -8px rgba(26,101,255,0.22),
+        0 0 0 1px rgba(255,255,255,0.95) inset,
+        0 1px 0 rgba(255,255,255,0.9) inset;
+}
+[data-theme="dark"] .hero-card:hover {
+    box-shadow:
+        0 24px 56px -8px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(80,148,255,0.3) inset;
+}
+
+/* Tags de carte — plus distincts */
+.hcard-tag {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   2. LOADER — ANIMATION PREMIUM
+   ══════════════════════════════════════════════════════════════ */
+
+.page-loader {
+    background: var(--ink);
+}
+[data-theme="light"] .page-loader { background: #F4F6FC; }
+
+.loader-logo {
+    font-size: 4rem;
+    letter-spacing: 12px;
+    animation: loaderLogoIn 0.8s cubic-bezier(.16,1,.3,1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+@keyframes loaderLogoIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.loader-track {
+    width: 200px;
+    height: 1px;
+    margin-top: 24px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    overflow: hidden;
+    position: relative;
+}
+[data-theme="light"] .loader-track { background: rgba(0,0,0,0.08); }
+
+.loader-track::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, var(--terra), var(--gold), var(--terra), transparent);
+    background-size: 200% 100%;
+    animation: loaderGlow 1.4s ease-in-out forwards;
+}
+@keyframes loaderGlow {
+    0%   { transform: translateX(-100%); opacity: 0; }
+    20%  { opacity: 1; }
+    100% { transform: translateX(100%); opacity: 1; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   3. SECTION HEADERS — PRÉSENTATION RENFORCÉE
+   ══════════════════════════════════════════════════════════════ */
+
+/* Eyebrow pill au-dessus des h2 de section */
+.section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--terra);
+    background: rgba(26,101,255,0.07);
+    border: 1px solid rgba(26,101,255,0.14);
+    margin-bottom: 16px;
+    display: block;
+}
+[data-theme="dark"] .section-eyebrow {
+    background: rgba(80,148,255,0.09);
+    border-color: rgba(80,148,255,0.18);
+    color: var(--terra-light);
+}
+
+/* H2 de section — plus grand, plus d'impact */
+.section-header h2 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+}
+.section-header h2 em {
+    color: var(--terra);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+}
+
+/* Ligne décorative sous le header */
+.section-header::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--terra), var(--gold));
+    border-radius: 2px;
+    margin-top: 24px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(.16,1,.3,1) 0.3s;
+}
+.section-header.revealed::after,
+.section-header.centered::after { transform: scaleX(1); }
+.section-header.centered::after { margin-left: auto; margin-right: auto; transform-origin: center; }
+
+/* ══════════════════════════════════════════════════════════════
+   4. CARDS — MICRO-INTERACTIONS PREMIUM
+   ══════════════════════════════════════════════════════════════ */
+
+/* Spotlight cursor sur les cards */
+.card-spotlight {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+        300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(26,101,255,0.10),
+        transparent 70%
+    );
+    z-index: 0;
+}
+[data-theme="dark"] .card-spotlight {
+    background: radial-gradient(
+        300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(80,148,255,0.12),
+        transparent 70%
+    );
+}
+.service-card:hover .card-spotlight,
+.sol-card:hover .card-spotlight,
+.pb-card:hover .card-spotlight { opacity: 1; }
+
+/* Service cards — hover plus dramatique */
+.service-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 32px 64px -16px rgba(26,101,255,0.18), 0 0 0 1px rgba(26,101,255,0.10);
+}
+[data-theme="dark"] .service-card:hover {
+    box-shadow: 0 32px 64px -16px rgba(0,0,0,0.5), 0 0 0 1px rgba(80,148,255,0.18);
+}
+
+/* Numéro de card — parallax subtil */
+.scard-num {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+.service-card:hover .scard-num {
+    transform: translateX(6px) scale(1.05);
+    opacity: 0.15;
+}
+
+/* Sol cards */
+.sol-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 28px 60px -12px rgba(26,101,255,0.15);
+}
+
+/* ── FAQ — reveal propre ── */
+.faq-item {
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.faq-item:hover {
+    transform: translateX(4px);
+}
+
+/* ── Methode steps — numéros animés ── */
+.step-num {
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), color 0.3s ease;
+}
+.methode-step:hover .step-num {
+    transform: scale(1.1) rotate(-3deg);
+    color: var(--terra);
+}
+
+/* ── Formules — featured card glow ── */
+.pr-v2.is-featured {
+    position: relative;
+}
+.pr-v2.is-featured::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, var(--terra), var(--gold), var(--terra));
+    background-size: 200% 200%;
+    z-index: -1;
+    animation: featuredGlow 4s ease infinite;
+    opacity: 0.7;
+}
+@keyframes featuredGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50%       { background-position: 100% 50%; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   5. NAVIGATION — PRÉSENTATION AMÉLIORÉE
+   ══════════════════════════════════════════════════════════════ */
+
+/* Logo — plus d'impact */
+.logo {
+    font-size: 1.9rem;
+    letter-spacing: 4px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.logo:hover { opacity: 0.8; transform: translateY(-1px); }
+
+/* Nav links — underline dégradé */
+.nav-links a::after {
+    background: linear-gradient(90deg, var(--terra), var(--gold));
+    height: 1.5px;
+    border-radius: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   6. SCROLL REVEAL — VARIANTES ENRICHIES
+   ══════════════════════════════════════════════════════════════ */
+
+/* Reveal depuis la gauche */
+.js-ready .reveal-left {
+    opacity: 0;
+    transform: translateX(-48px);
+    transition: opacity 0.75s ease, transform 0.75s cubic-bezier(.16,1,.3,1);
+}
+.js-ready .reveal-left.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Reveal depuis la droite */
+.js-ready .reveal-right {
+    opacity: 0;
+    transform: translateX(48px);
+    transition: opacity 0.75s ease, transform 0.75s cubic-bezier(.16,1,.3,1);
+}
+.js-ready .reveal-right.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Reveal avec scale */
+.js-ready .reveal-scale {
+    opacity: 0;
+    transform: scale(0.93) translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.34,1.56,.64,1);
+}
+.js-ready .reveal-scale.revealed {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* Split words — animation mot par mot */
+.split-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.6em);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(.16,1,.3,1);
+}
+.revealed .split-word {
+    opacity: 1;
+    transform: translateY(0);
+}
+.revealed .split-word:nth-child(1)  { transition-delay: 0.00s; }
+.revealed .split-word:nth-child(2)  { transition-delay: 0.05s; }
+.revealed .split-word:nth-child(3)  { transition-delay: 0.10s; }
+.revealed .split-word:nth-child(4)  { transition-delay: 0.15s; }
+.revealed .split-word:nth-child(5)  { transition-delay: 0.20s; }
+.revealed .split-word:nth-child(6)  { transition-delay: 0.25s; }
+.revealed .split-word:nth-child(7)  { transition-delay: 0.30s; }
+.revealed .split-word:nth-child(8)  { transition-delay: 0.35s; }
+.revealed .split-word:nth-child(9)  { transition-delay: 0.40s; }
+.revealed .split-word:nth-child(10) { transition-delay: 0.45s; }
+
+/* ══════════════════════════════════════════════════════════════
+   7. FOOTER / CTA BAND — PRÉSENTATION
+   ══════════════════════════════════════════════════════════════ */
+
+/* CTA band — glow animé en dark mode */
+[data-theme="dark"] .footer-cta-band {
+    position: relative;
+    overflow: hidden;
+}
+[data-theme="dark"] .footer-cta-band::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(80,148,255,0.09) 0%, transparent 65%);
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    animation: ctaBandGlow 8s ease-in-out infinite;
+    pointer-events: none;
+}
+@keyframes ctaBandGlow {
+    0%, 100% { transform: translateX(-50%) scale(1);    opacity: 1; }
+    50%       { transform: translateX(-50%) scale(1.15); opacity: 0.6; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   8. MARQUEE — AMÉLIORATION
+   ══════════════════════════════════════════════════════════════ */
+
+/* Marquee — masques dégradés plus doux */
+.stack-marquee,
+.stack-marquee-2 {
+    position: relative;
+}
+.stack-marquee::before,  .stack-marquee::after,
+.stack-marquee-2::before,.stack-marquee-2::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 120px;
+    z-index: 2;
+    pointer-events: none;
+}
+.stack-marquee::before,.stack-marquee-2::before {
+    left: 0;
+    background: linear-gradient(to right, var(--paper), transparent);
+}
+.stack-marquee::after,.stack-marquee-2::after {
+    right: 0;
+    background: linear-gradient(to left, var(--paper), transparent);
+}
+
+/* Texte marquee — légèrement plus lisible */
+.stack-marquee-2 .marquee-track span {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    opacity: 0.55;
+    transition: opacity 0.2s ease;
+}
+.stack-marquee-2 .marquee-track span:hover { opacity: 1; }
+
+/* ══════════════════════════════════════════════════════════════
+   9. ÉLÉMENTS INTERACTIFS — POLISH
+   ══════════════════════════════════════════════════════════════ */
+
+/* Scroll progress — couleurs enrichies */
+#scrollProgress {
+    background: linear-gradient(90deg, var(--terra), var(--gold), var(--terra-light));
+    background-size: 200% 100%;
+    animation: progressShimmer 3s linear infinite;
+    height: 2.5px;
+}
+@keyframes progressShimmer {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+}
+
+/* Announce bar — pulse plus visible */
+.announce-pulse {
+    animation: availPulse 2s ease-out infinite;
+}
+
+/* FABs — ombre plus prononcée */
+.fab--devis {
+    box-shadow: 0 8px 28px -6px rgba(26,101,255,0.45), 0 2px 8px rgba(0,0,0,0.15);
+}
+.fab--wa {
+    box-shadow: 0 8px 28px -6px rgba(37,211,102,0.45), 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   10. REDUCED MOTION — RESPECT TOTAL
+   ══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    #accueil::before { animation: none; }
+    .hero-avail-badge::after { animation: none; }
+    .hero-avail-dot { animation: none; box-shadow: 0 0 0 2px rgba(34,197,94,0.5); }
+    .loader-logo { animation: none; opacity: 1; transform: none; }
+    .loader-track::after { animation-duration: 0.3s; }
+    .section-header::after { transition: none; transform: scaleX(1); }
+    .split-word { opacity: 1; transform: none; transition: none; }
+    .pr-v2.is-featured::before { animation: none; }
+    #scrollProgress { animation: none; }
+    .feat-glow { animation: none; }
+    #accueil::before { animation: none; }
+    .ctaBandGlow { animation: none; }
+    @keyframes badgeShimmer { to {} }
+    @keyframes progressShimmer { to {} }
+}

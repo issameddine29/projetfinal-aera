@@ -1,0 +1,686 @@
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE PATCH — HERO + RÉALISATIONS + CORRECTIONS QUALITÉ
+   Patch non-destructif à charger APRÈS styles.css
+   ÆRĀ Studio · 2025
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════
+   -1. CORRECTIONS QUALITÉ GLOBALES
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── viewport-fit pour iPhone avec encoche ── */
+@supports (padding: env(safe-area-inset-right)) {
+    .float-devis { left: max(36px, calc(36px + env(safe-area-inset-left))); }
+    .fab--wa      { right: max(36px, calc(36px + env(safe-area-inset-right))); }
+}
+
+/* ── footer-cta-title : !important inutiles → surcharge propre ── */
+.footer-cta-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: #fff;
+    margin: 0;
+}
+
+/* ── Scroll naturel sur iOS ── */
+.pf-viewport,
+.pf-track,
+.carousel-viewport,
+.carousel-track {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ── focus-visible global cohérent ── */
+:focus-visible {
+    outline: 2px solid var(--terra, #4D9EFF);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--terra, #4D9EFF);
+    outline-offset: 3px;
+}
+
+/* ── Sélection de texte dans les couleurs du design system ── */
+::selection {
+    background: rgba(77, 158, 255, 0.25);
+    color: inherit;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   0. Z-INDEX — ÉCHELLE STANDARDISÉE
+   ──────────────────────────────────────────────────────────────
+   Niveaux logiques :
+     10   → éléments de section (hero-inner, cartes)
+     20   → flèches carousel, overlays locaux
+     100  → barre de progression scroll
+     200  → navigation sticky
+     300  → announce bar
+     400  → FABs (WhatsApp, devis flottant)
+     500  → toasts / notifications
+     900  → curseur custom
+     1000 → page loader (doit tout couvrir)
+   ══════════════════════════════════════════════════════════════ */
+
+/* Announce bar */
+.announce-bar { z-index: 300 !important; }
+
+/* Nav sticky */
+nav { z-index: 200 !important; }
+
+/* Barre de progression scroll */
+#scrollProgress { z-index: 100 !important; }
+
+/* FAB WhatsApp */
+.fab--wa { z-index: 400 !important; }
+
+/* Bouton devis flottant */
+.float-devis { z-index: 410 !important; }
+
+/* Toast notification */
+.toast-notification { z-index: 500 !important; }
+
+/* Curseur custom */
+.custom-cursor { z-index: 900 !important; }
+
+/* Page loader — couvre tout */
+.page-loader { z-index: 1000 !important; }
+
+/* Canvas cinema background — sous tout le reste */
+#cine-bg { z-index: -1 !important; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   1. HERO — BANNIÈRE
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── TABLET LARGE (≤ 1180px) ────────────────────────────────── */
+@media (max-width: 1180px) {
+    .hero-inner {
+        gap: 48px;
+        padding: 40px 40px 60px;
+    }
+    .hero-title { font-size: clamp(2.2rem, 4.5vw, 3.2rem); }
+    .hero-visual { height: 480px; }
+    .hero-card-1 { width: 220px; }
+    .hero-card-2 { width: 250px; }
+    .hero-card-3 { width: 160px; }
+}
+
+/* ── TABLET (≤ 992px) — 1 colonne, visual cachée ────────────── */
+@media (max-width: 992px) {
+    /* #accueil — hauteur auto sur tablette */
+    [data-theme="light"] #accueil,
+    :root #accueil,
+    [data-theme="dark"] #accueil {
+        min-height: auto;
+        padding-bottom: 60px !important;
+        background-position: center top !important;
+    }
+
+    .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 48px 40px 64px;
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    /* Visual complètement caché sur tablette */
+    .hero-visual { display: none !important; }
+
+    /* Contenu centré sur tablette */
+    .hero-content {
+        text-align: left;
+        max-width: 680px;
+    }
+
+    .hero-title { font-size: clamp(2.6rem, 5.5vw, 3.8rem); margin-bottom: 22px; }
+    .hero-subtitle { max-width: 580px; font-size: 1.08rem; margin-bottom: 36px; }
+
+    .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        margin-top: 44px;
+        padding-top: 32px;
+        border-top: 1px solid var(--border);
+    }
+    .hero-stat {
+        text-align: center;
+        padding: 0 16px;
+        border-right: 1px solid var(--border);
+    }
+    .hero-stat:first-child { padding-left: 0; text-align: left; }
+    .hero-stat:last-child  { border-right: none; }
+    .hero-stat-num  { font-size: 2.4rem; }
+}
+
+/* ── MOBILE (≤ 768px) ──────────────────────────────────────── */
+@media (max-width: 768px) {
+    [data-theme="light"] #accueil,
+    :root #accueil,
+    [data-theme="dark"] #accueil {
+        padding: 90px 0 0 0 !important;
+        background-size: cover;
+        background-position: center 20% !important;
+    }
+
+    .hero-inner {
+        padding: 32px 22px 56px;
+        max-width: 100%;
+    }
+
+    /* Overline — wrap propre */
+    .hero-overline {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px 10px;
+        font-size: 0.68rem;
+        letter-spacing: 2px;
+        margin-bottom: 18px;
+    }
+    .hero-overline::before { display: none; }
+    .hero-overline-sep { display: none; }
+    .hero-avail-badge {
+        font-size: 0.66rem;
+        padding: 4px 10px;
+        white-space: nowrap;
+    }
+
+    /* Titre */
+    .hero-title {
+        font-size: clamp(2.1rem, 8vw, 2.9rem);
+        margin-bottom: 18px;
+        line-height: 1.1;
+    }
+
+    /* Subtitle */
+    .hero-subtitle {
+        font-size: 0.97rem;
+        line-height: 1.75;
+        max-width: 100%;
+        margin-bottom: 28px;
+    }
+
+    /* Boutons — pleine largeur */
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    .hero-actions .btn-primary,
+    .hero-actions .btn-ghost {
+        justify-content: center;
+        min-height: 50px;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Stats — grille compacte 3 colonnes */
+    .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+        flex-wrap: unset;
+    }
+    .hero-stat {
+        text-align: center;
+        padding: 0 10px;
+        border-right: 1px solid var(--border);
+    }
+    .hero-stat:first-child { padding-left: 0; text-align: left; }
+    .hero-stat:last-child  { border-right: none; padding-right: 0; text-align: right; }
+    .hero-stat-num  { font-size: 2rem; }
+    .hero-stat-label { font-size: 0.72rem; }
+}
+
+/* ── PETIT MOBILE (≤ 480px) ─────────────────────────────────── */
+@media (max-width: 480px) {
+    [data-theme="light"] #accueil,
+    :root #accueil,
+    [data-theme="dark"] #accueil {
+        padding: 80px 0 0 0 !important;
+    }
+
+    .hero-inner {
+        padding: 24px 18px 52px;
+    }
+
+    .hero-overline {
+        font-size: 0.60rem;
+        letter-spacing: 1.5px;
+        gap: 4px 8px;
+    }
+    .hero-avail-badge {
+        font-size: 0.60rem;
+        padding: 3px 8px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.9rem, 7.5vw, 2.5rem);
+        margin-bottom: 14px;
+    }
+
+    .hero-subtitle {
+        font-size: 0.92rem;
+        margin-bottom: 24px;
+        line-height: 1.7;
+    }
+
+    .hero-actions { gap: 10px; }
+    .hero-actions .btn-primary,
+    .hero-actions .btn-ghost {
+        padding: 14px 22px;
+        font-size: 0.85rem;
+        min-height: 48px;
+    }
+
+    /* Stats ultra-compact */
+    .hero-stats {
+        margin-top: 24px;
+        padding-top: 20px;
+    }
+    .hero-stat-num   { font-size: 1.75rem; }
+    .hero-stat-label { font-size: 0.65rem; margin-top: 4px; }
+    .hero-stat       { padding: 0 8px; }
+}
+
+/* ── TRÈS PETIT (≤ 360px) ───────────────────────────────────── */
+@media (max-width: 360px) {
+    .hero-inner { padding: 20px 14px 44px; }
+    .hero-title  { font-size: clamp(1.7rem, 7vw, 2.1rem); }
+    .hero-subtitle { font-size: 0.88rem; }
+    .hero-stat-num  { font-size: 1.55rem; }
+    .hero-stat-label { font-size: 0.60rem; }
+    .hero-stat { padding: 0 6px; }
+    .hero-avail-badge { font-size: 0.56rem; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   2. RÉALISATIONS — CAROUSEL
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── TABLET (≤ 1100px) ──────────────────────────────────────── */
+@media (max-width: 1100px) {
+
+    /* Section wrapper — padding réduit */
+    #realisations { padding: 72px 0 80px; }
+
+    /* Header — stack vertical */
+    .pf-hdr {
+        padding: 48px 0 32px;
+        gap: 24px;
+    }
+    .pf-hdr-title { font-size: clamp(2rem, 4vw, 3rem); }
+
+    /* Slide body — 1 colonne */
+    .pf-slide-body {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+    .pf-carousel .pf-slide { min-height: auto; }
+
+    /* Preview en haut */
+    .pf-sr {
+        order: -1;
+        padding: 20px 24px 18px;
+        border-bottom: 1px solid rgba(255,255,255,.06);
+        border-right: none;
+    }
+    .pf-brow-screen { height: 300px; }
+
+    /* Contenu sous la preview */
+    .pf-sl {
+        padding: 28px 28px 24px;
+        border-right: none;
+    }
+
+    /* Liste feats — 2 colonnes maintenu, mais moins de gap */
+    .pf-sl-list { grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+
+    /* KPIs — flex horizontal */
+    .pf-sl-kpis { gap: 0; }
+    .pf-kpi { padding: 14px 16px; }
+    .pf-kpi b { font-size: 1.9rem; }
+
+    /* Flèches — plus petites */
+    .pf-arr { width: 40px; height: 40px; }
+    .pf-arr--prev { left: 10px; }
+    .pf-arr--next { right: 10px; }
+}
+
+/* ── MOBILE (≤ 768px) ──────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    #realisations { padding: 56px 0 64px; }
+
+    /* Header */
+    .pf-hdr {
+        padding: 24px 0 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .pf-hdr-title { font-size: clamp(1.8rem, 5.5vw, 2.4rem); }
+    .pf-hdr-sub   { font-size: 0.84rem; }
+
+    /* Stats header — bande compacte */
+    .pf-hdr-stats {
+        display: flex;
+        width: 100%;
+        gap: 0;
+        background: rgba(255,255,255,.03);
+        border: 1px solid rgba(255,255,255,.07);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .pf-hdr-stat {
+        flex: 1;
+        padding: 10px 8px;
+        text-align: center;
+        border-right: 1px solid rgba(255,255,255,.06);
+    }
+    .pf-hdr-stat:last-child { border-right: none; }
+    .pf-hdr-stat b     { font-size: 1.25rem; }
+    .pf-hdr-stat small { font-size: 0.60rem; }
+    .pf-hdr-sep { display: none; }
+
+    /* Preview — full width, hauteur réduite */
+    .pf-sr {
+        order: -1;
+        padding: 0;
+        border-bottom: none;
+        background: none;
+    }
+    .pf-sr::after { display: none; }
+
+    .pf-browser {
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+        box-shadow: none;
+    }
+    .pf-browser::before { display: none; }
+
+    .pf-brow {
+        padding: 7px 12px;
+        background: rgba(11,13,30,.98);
+    }
+    .pf-brow-bar { font-size: 0.57rem; padding: 3px 9px; }
+    .pf-brow-dots span { width: 7px; height: 7px; }
+
+    /* Hauteur écran preview — responsive via clamp */
+    .pf-brow-screen { height: clamp(180px, 50vw, 240px); }
+
+    /* Overlay toujours visible sur touch */
+    .pf-brow-glass {
+        opacity: 1;
+        pointer-events: auto;
+        background: linear-gradient(180deg, transparent 35%, rgba(5,13,30,.80) 100%);
+        backdrop-filter: none;
+        align-items: flex-end;
+        justify-content: flex-end;
+        padding: 0 14px 12px;
+    }
+    .pf-brow-open {
+        font-size: 0.72rem;
+        padding: 7px 16px;
+        background: rgba(255,255,255,.12);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 8px;
+    }
+
+    /* Tags techs — masqués */
+    .pf-sr-tags { display: none; }
+
+    /* Contenu slide */
+    .pf-sl {
+        padding: 20px 18px 22px;
+        border-right: none;
+    }
+    .pf-sl::after { display: none; }
+    .pf-ghost { display: none; }
+
+    .pf-sl-eyebrow {
+        font-size: 0.62rem;
+        letter-spacing: 2.5px;
+        margin-bottom: 8px;
+        opacity: 0.75;
+    }
+    .pf-sl-title {
+        font-size: clamp(1.8rem, 6vw, 2.6rem);
+        margin-bottom: 6px;
+        line-height: 1.05;
+    }
+    .pf-sl-cat {
+        font-size: 0.65rem;
+        margin-bottom: 12px;
+    }
+    .pf-sl-desc {
+        font-size: 0.84rem;
+        line-height: 1.55;
+        margin-bottom: 14px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Liste features — masquée sur mobile */
+    .pf-sl-list { display: none; }
+
+    /* KPIs — grille 3 cases */
+    .pf-sl-kpis {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        padding: 0;
+        margin-bottom: 16px;
+        border: none;
+    }
+    .pf-kpi {
+        padding: 10px 6px;
+        margin-right: 0;
+        text-align: center;
+        background: rgba(255,255,255,.03);
+        border: 1px solid rgba(255,255,255,.06);
+        border-radius: 10px;
+        border-left: none !important;
+    }
+    .pf-kpi:last-child { border-right: none; }
+    .pf-kpi b {
+        font-size: 1.4rem;
+        color: var(--acc, #4D9EFF);
+        text-shadow: 0 0 14px var(--acc-glow, rgba(77,158,255,.3));
+    }
+    .pf-kpi span { font-size: 0.52rem; margin-top: 3px; color: rgba(255,255,255,.28); }
+
+    /* Actions — grille 2 colonnes */
+    .pf-sl-actions {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        flex-wrap: unset;
+    }
+    .pf-sl-cta-p {
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-size: 0.86rem;
+    }
+    .pf-sl-cta-s {
+        padding: 14px 16px;
+        border-radius: 12px;
+        font-size: 0.82rem;
+        white-space: nowrap;
+    }
+    /* 1 seul bouton → pleine largeur */
+    .pf-sl-actions:has(.pf-sl-cta-p:only-child) {
+        grid-template-columns: 1fr;
+    }
+
+    /* Flèches cachées — swipe suffit */
+    .pf-arr { display: none !important; }
+
+    /* Navigation tabs — compacte */
+    .pf-nav {
+        min-height: 50px;
+        border-radius: 0 0 12px 12px;
+    }
+    .pf-nav-tabs { display: flex; flex: 1; }
+    .pf-nav-tab {
+        flex: 1;
+        min-width: 0;
+        padding: 8px 4px 10px;
+        gap: 2px;
+    }
+    .pf-ntab-num { display: none; }
+    .pf-ntab-name {
+        font-size: 0.60rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+    .pf-ntab-bar { left: 16%; right: 16%; height: 2px; }
+    .pf-nav-ct { display: none; }
+
+    /* Viewport radius réduit */
+    .pf-viewport {
+        border-radius: 12px 12px 0 0;
+        box-shadow: 0 0 0 1px rgba(255,255,255,.05), 0 16px 40px rgba(0,0,0,.4);
+    }
+
+    /* Slide CTA */
+    .pf-slide--cta { min-height: auto; }
+    .pf-cta-inner {
+        padding: 48px 22px;
+        gap: 14px;
+    }
+    .pf-cta-title { font-size: clamp(1.8rem, 5.5vw, 2.6rem); }
+    .pf-cta-desc  { font-size: 0.88rem; line-height: 1.55; }
+    .pf-cta-num   { font-size: 3rem; top: 16px; right: 18px; }
+    .pf-cta-actions { flex-direction: column; align-items: stretch; gap: 8px; }
+    .pf-cta-btn-primary,
+    .pf-cta-btn-ghost { justify-content: center; border-radius: 10px; }
+    .pf-cta-btn-primary { padding: 14px 22px; font-size: 0.88rem; }
+    .pf-cta-btn-ghost   { padding: 12px 18px; font-size: 0.84rem; }
+    .pf-cta-proof { flex-direction: row; flex-wrap: wrap; gap: 4px 12px; font-size: 0.68rem; justify-content: center; }
+
+    /* Placeholder hero */
+    .pf-ph-hero  { padding: 18px 16px 12px; gap: 8px; }
+    .pf-ph-title { font-size: 1.1rem; }
+    .pf-ph-stats { flex-wrap: wrap; }
+    .pf-ph-stat  { padding: 10px 6px; }
+    .pf-ph-stat strong { font-size: 1rem; }
+}
+
+/* ── PETIT MOBILE (≤ 480px) ─────────────────────────────────── */
+@media (max-width: 480px) {
+
+    #realisations { padding: 44px 0 52px; }
+
+    .pf-hdr { padding: 18px 0 12px; gap: 10px; }
+    .pf-hdr-title { font-size: clamp(1.5rem, 5vw, 2rem); }
+    .pf-hdr-sub   { font-size: 0.78rem; }
+    .pf-hdr-stat  { padding: 8px 6px; }
+    .pf-hdr-stat b { font-size: 1.1rem; }
+    .pf-hdr-stat small { font-size: 0.54rem; }
+
+    .pf-brow-screen { height: clamp(160px, 47vw, 200px); }
+    .pf-brow { padding: 6px 10px; }
+    .pf-brow-dots span { width: 6px; height: 6px; }
+    .pf-brow-open { font-size: 0.66rem; padding: 6px 12px; }
+
+    .pf-sl { padding: 16px 14px 18px; }
+    .pf-sl-eyebrow { font-size: 0.57rem; margin-bottom: 6px; }
+    .pf-sl-title { font-size: clamp(1.5rem, 5.5vw, 2rem); }
+    .pf-sl-cat   { font-size: 0.60rem; margin-bottom: 10px; }
+    .pf-sl-desc  { font-size: 0.80rem; -webkit-line-clamp: 2; }
+
+    /* KPIs ultra-compacts */
+    .pf-sl-kpis { gap: 6px; }
+    .pf-kpi { padding: 8px 4px; border-radius: 8px; }
+    .pf-kpi b { font-size: 1.15rem; }
+    .pf-kpi span { font-size: 0.48rem; }
+
+    /* Boutons empilés */
+    .pf-sl-actions { grid-template-columns: 1fr; gap: 8px; }
+    .pf-sl-cta-p { font-size: 0.82rem; padding: 12px 16px; }
+    .pf-sl-cta-s { font-size: 0.78rem; padding: 11px 14px; }
+
+    /* Nav */
+    .pf-nav { min-height: 44px; }
+    .pf-nav-tab { padding: 6px 2px 8px; gap: 1px; }
+    .pf-ntab-name { font-size: 0.54rem; }
+
+    /* CTA slide */
+    .pf-cta-inner { padding: 36px 16px; gap: 10px; }
+    .pf-cta-title { font-size: clamp(1.5rem, 5vw, 2rem); }
+    .pf-cta-desc  { font-size: 0.82rem; }
+    .pf-cta-btn-primary { padding: 12px 18px; font-size: 0.84rem; }
+    .pf-cta-btn-ghost   { padding: 10px 14px; font-size: 0.80rem; }
+    .pf-cta-proof { font-size: 0.62rem; gap: 3px 8px; }
+
+    /* Placeholder */
+    .pf-ph-hero { padding: 14px 12px 10px; }
+    .pf-ph-title { font-size: 0.95rem; }
+    .pf-ph-badge { font-size: 0.52rem; padding: 2px 7px; }
+    .pf-ph-cta   { font-size: 0.62rem; padding: 5px 10px; }
+    .pf-ph-stat  { padding: 7px 4px; }
+    .pf-ph-stat strong { font-size: 0.82rem; }
+    .pf-ph-stat span   { font-size: 0.48rem; }
+}
+
+/* ── TRÈS PETIT (≤ 360px) ───────────────────────────────────── */
+@media (max-width: 360px) {
+
+    /* ── Hero — surcharge le flex-direction:column de styles.css ── */
+    .hero-inner { padding: 18px 12px 40px; }
+    .hero-title  { font-size: clamp(1.7rem, 7vw, 2.1rem); }
+    .hero-subtitle { font-size: 0.86rem; }
+
+    /* Forcer grille 3 colonnes même à 360px */
+    .hero-stats {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        flex-direction: unset !important;
+        gap: 0 !important;
+        margin-top: 20px;
+        padding-top: 18px;
+    }
+    .hero-stat {
+        display: block !important;
+        text-align: center !important;
+        padding: 0 5px !important;
+        gap: unset !important;
+    }
+    .hero-stat:first-child { text-align: left !important; }
+    .hero-stat:last-child  { text-align: right !important; }
+    .hero-stat-num   { font-size: 1.45rem; }
+    .hero-stat-label { font-size: 0.57rem; margin-top: 2px; }
+    .hero-avail-badge { font-size: 0.54rem; }
+
+    /* ── Réalisations ── */
+    .pf-hdr-stat b { font-size: 1rem; }
+    .pf-brow-screen { height: clamp(140px, 44vw, 170px); }
+
+    .pf-sl { padding: 14px 12px 16px; }
+    .pf-sl-title { font-size: clamp(1.3rem, 5vw, 1.7rem); }
+    .pf-sl-eyebrow { font-size: 0.52rem; letter-spacing: 2px; }
+    .pf-sl-desc { font-size: 0.76rem; -webkit-line-clamp: 2; }
+
+    .pf-kpi b { font-size: 1rem; }
+    .pf-kpi span { font-size: 0.44rem; }
+
+    .pf-ntab-name { font-size: 0.50rem; }
+}

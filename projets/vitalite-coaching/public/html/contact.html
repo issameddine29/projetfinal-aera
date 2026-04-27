@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Réservez votre consultation gratuite avec Vitalité Coaching. Coaching sportif personnalisé, nutrition et bien-être.">
+    <meta name="keywords" content="réservation coaching, consultation gratuite, coaching sportif, prise de rendez-vous">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Réserver une Séance - Vitalité Coaching">
+    <meta property="og:description" content="Réservez votre consultation gratuite de 30 minutes. Coaching personnalisé pour hommes et femmes.">
+    <meta property="og:type" content="website">
+    
+    <title>Réservation & Contact - Vitalité Coaching</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/contact.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Vitalité<span>Coaching</span></a>
+            
+            <button class="menu-toggle" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="../../index.html">Accueil</a></li>
+                <li><a href="homme.html">Homme</a></li>
+                <li><a href="femme.html">Femme</a></li>
+                <li><a href="methode.html">Méthodes</a></li>
+                <li><a href="nutrition.html">Nutrition</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero -->
+        <section class="booking-hero">
+            <h1>Réservez Votre Consultation</h1>
+            <p>30 minutes gratuites pour discuter de vos objectifs et découvrir comment je peux vous accompagner vers votre meilleure version.</p>
+            <div class="hero-badges">
+                <span class="hero-badge"><i class="fas fa-check-circle"></i> Sans engagement</span>
+                <span class="hero-badge"><i class="fas fa-video"></i> En ligne ou présentiel</span>
+                <span class="hero-badge"><i class="fas fa-clock"></i> Réponse sous 24h</span>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="booking-wrapper">
+                
+                <!-- Main Form -->
+                <div class="booking-card animate-on-scroll">
+                    <div class="card-header">
+                        <i class="fas fa-calendar-check"></i>
+                        <div>
+                            <h2>Formulaire de Réservation</h2>
+                            <p>Remplissez les informations ci-dessous pour bloquer votre créneau</p>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Notifications -->
+                        <div id="alertContainer"></div>
+
+                        <form id="bookingForm" novalidate>
+                            
+                            <!-- Section 1: Personal Info -->
+                            <div class="form-section">
+                                <h3 class="form-section-title"><i class="fas fa-user"></i> Vos informations</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="name"><i class="fas fa-signature"></i> Nom complet <span class="required">*</span></label>
+                                        <input type="text" id="name" name="name" placeholder="Jean Dupont" required pattern="[\p{L}\p{M}\s'\-\.]+" title="Veuillez entrer un nom valide">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email"><i class="fas fa-envelope"></i> Email <span class="required">*</span></label>
+                                        <input type="email" id="email" name="email" placeholder="jean@example.com" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="phone"><i class="fas fa-phone"></i> Téléphone</label>
+                                        <input type="tel" id="phone" name="phone" placeholder="06 12 34 56 78" pattern="[0-9\s\+\-\(\)]{10,}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="location"><i class="fas fa-map-marker-alt"></i> Ville / Mode</label>
+                                        <select id="location" name="location">
+                                            <option value="">Sélectionnez...</option>
+                                            <option value="paris">Paris (Présentiel)</option>
+                                            <option value="iledefrance">Île-de-France (Présentiel)</option>
+                                            <option value="online" selected>En ligne (Visio)</option>
+                                            <option value="other">Autre région (En ligne)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 2: Program Selection -->
+                            <div class="form-section">
+                                <h3 class="form-section-title"><i class="fas fa-bullseye"></i> Votre objectif</h3>
+                                <div class="form-group">
+                                    <label>Quel programme vous intéresse ? <span class="required">*</span></label>
+                                    <div class="program-pills" role="radiogroup" aria-label="Sélection du programme">
+                                        <div class="program-pill">
+                                            <input type="radio" name="program" id="prog-masse" value="prise-masse" required>
+                                            <label for="prog-masse"><i class="fas fa-dumbbell"></i> Prise de Masse</label>
+                                        </div>
+                                        <div class="program-pill">
+                                            <input type="radio" name="program" id="prog-force" value="force">
+                                            <label for="prog-force"><i class="fas fa-fire"></i> Force & Puissance</label>
+                                        </div>
+                                        <div class="program-pill">
+                                            <input type="radio" name="program" id="prog-seche" value="seche">
+                                            <label for="prog-seche"><i class="fas fa-cut"></i> Sèche Athlétique</label>
+                                        </div>
+                                        <div class="program-pill">
+                                            <input type="radio" name="program" id="prog-tonicite" value="tonicite">
+                                            <label for="prog-tonicite"><i class="fas fa-heart"></i> Tonicité Femme</label>
+                                        </div>
+                                        <div class="program-pill">
+                                            <input type="radio" name="program" id="prog-bienetre" value="bienetre">
+                                            <label for="prog-bienetre"><i class="fas fa-spa"></i> Bien-être & Posture</label>
+                                        </div>
+                                        <div class="program-pill">
+                                            <input type="radio" name="program" id="prog-nutrition" value="nutrition">
+                                            <label for="prog-nutrition"><i class="fas fa-apple-alt"></i> Nutrition Seule</label>
+                                        </div>
+                                        <div class="program-pill">
+                                            <input type="radio" name="program" id="prog-uncertain" value="incertain">
+                                            <label for="prog-uncertain"><i class="fas fa-question-circle"></i> Je ne sais pas encore</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 3: Date & Time -->
+                            <div class="form-section">
+                                <h3 class="form-section-title"><i class="fas fa-calendar-alt"></i> Choisissez votre créneau</h3>
+                                <div class="datetime-container">
+                                    
+                                    <!-- Calendar -->
+                                    <div class="date-picker">
+                                        <div class="date-picker-header">
+                                            <button type="button" id="prevMonth" aria-label="Mois précédent"><i class="fas fa-chevron-left"></i></button>
+                                            <span id="currentMonthYear">Mars 2024</span>
+                                            <button type="button" id="nextMonth" aria-label="Mois suivant"><i class="fas fa-chevron-right"></i></button>
+                                        </div>
+                                        <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="Calendrier de sélection">
+                                            <!-- Days generated by JS -->
+                                        </div>
+                                        <p style="text-align: center; margin-top: 12px; font-size: 0.85rem; color: var(--text-light);">
+                                            <i class="fas fa-info-circle"></i> Créneaux disponibles : Lundi-Samedi, 9h-18h
+                                        </p>
+                                    </div>
+
+                                    <!-- Time Slots -->
+                                    <div class="time-slots">
+                                        <div class="time-slots-header">
+                                            <h4>Heures disponibles</h4>
+                                            <div class="slots-legend">
+                                                <span class="legend-item"><span class="legend-dot available"></span> Libre</span>
+                                                <span class="legend-item"><span class="legend-dot booked"></span> Réservé</span>
+                                            </div>
+                                        </div>
+                                        <div id="slotsGrid" class="slots-grid" role="radiogroup" aria-label="Sélection de l'heure">
+                                            <p style="grid-column: 1/-1; color: var(--text-light); text-align: center; padding: 20px;">
+                                                <i class="fas fa-hand-pointer"></i><br>Sélectionnez une date pour voir les créneaux
+                                            </p>
+                                        </div>
+                                        <input type="hidden" id="selectedDateTime" name="datetime" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 4: Message -->
+                            <div class="form-section">
+                                <h3 class="form-section-title"><i class="fas fa-comment-alt"></i> Message (Optionnel)</h3>
+                                <div class="form-group full-width">
+                                    <label for="message">Parlez-moi de vos objectifs, contraintes ou questions...</label>
+                                    <textarea id="message" name="message" placeholder="Ex: Je souhaite perdre 10kg, j'ai une blessure au genou, je débute en musculation..."></textarea>
+                                    <div class="message-hints">
+                                        <span class="hint-chip" data-hint="Perte de poids">💡 Perte de poids</span>
+                                        <span class="hint-chip" data-hint="Prise de muscle">💡 Prise de muscle</span>
+                                        <span class="hint-chip" data-hint="Blessure / Douleur">💡 Blessure</span>
+                                        <span class="hint-chip" data-hint="Débutant complet">💡 Débutant</span>
+                                        <span class="hint-chip" data-hint="Préparation événement">💡 Événement</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit -->
+                            <button type="submit" class="btn-submit" id="submitBtn">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Confirmer ma réservation gratuite</span>
+                            </button>
+                            
+                            <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: var(--text-light);">
+                                <i class="fas fa-lock"></i> Vos données sont protégées • Aucune carte bancaire requise
+                            </p>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="booking-sidebar">
+                    
+                    <!-- What to Expect -->
+                    <div class="info-card animate-on-scroll">
+                        <h4><i class="fas fa-list-check"></i> Déroulé de la consultation</h4>
+                        <ul class="info-list">
+                            <li><i class="fas fa-check"></i> <strong>0-10 min :</strong> Présentation & historique</li>
+                            <li><i class="fas fa-check"></i> <strong>10-20 min :</strong> Analyse de vos objectifs</li>
+                            <li><i class="fas fa-check"></i> <strong>20-30 min :</strong> Recommandations personnalisées</li>
+                            <li><i class="fas fa-check"></i> <strong>Fin :</strong> Réponses à vos questions</li>
+                        </ul>
+                    </div>
+
+                    <!-- Preparation Tips -->
+                    <div class="info-card animate-on-scroll">
+                        <h4><i class="fas fa-lightbulb"></i> Pour préparer notre échange</h4>
+                        <ul class="info-list">
+                            <li><i class="fas fa-pen"></i> Notez vos 3 objectifs principaux</li>
+                            <li><i class="fas fa-clock"></i> Pensez à votre disponibilité hebdo</li>
+                            <li><i class="fas fa-apple-alt"></i> Listez vos préférences alimentaires</li>
+                            <li><i class="fas fa-question"></i> Préparez vos questions</li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Direct -->
+                    <div class="info-card contact-info animate-on-scroll">
+                        <i class="fas fa-headset"></i>
+                        <h4>Une question urgente ?</h4>
+                        <p>Je réponds personnellement à tous les messages sous 24h ouvrées.</p>
+                        <div class="contact-links">
+                            <a href="mailto:contact@vitalitecoaching.fr" class="contact-link">
+                                <i class="fas fa-envelope"></i> contact@vitalitecoaching.fr
+                            </a>
+                            <a href="tel:+33612345678" class="contact-link">
+                                <i class="fas fa-phone"></i> 06 12 34 56 78
+                            </a>
+                            <a href="https://wa.me/33612345678" class="contact-link" target="_blank" rel="noopener">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmationModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal">
+            <div class="modal-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3 id="modalTitle">Réservation Confirmée ! 🎉</h3>
+            <p>Merci <strong id="confirmName"></strong> ! Votre consultation est bien enregistrée.</p>
+            
+            <div class="booking-summary">
+                <div class="booking-summary-item">
+                    <span>📅 Date</span>
+                    <strong id="confirmDate"></strong>
+                </div>
+                <div class="booking-summary-item">
+                    <span>⏰ Heure</span>
+                    <strong id="confirmTime"></strong>
+                </div>
+                <div class="booking-summary-item">
+                    <span>🎯 Programme</span>
+                    <strong id="confirmProgram"></strong>
+                </div>
+                <div class="booking-summary-item">
+                    <span>📍 Mode</span>
+                    <strong id="confirmLocation"></strong>
+                </div>
+            </div>
+            
+            <p style="font-size: 0.95rem;">
+                <i class="fas fa-envelope"></i> Vous recevrez un email de confirmation avec le lien de visio (si en ligne) ou l'adresse exacte (si présentiel).
+            </p>
+            
+            <button class="modal-btn" id="modalClose">
+                <i class="fas fa-home"></i> Retour à l'accueil
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Vitalité Coaching</h4>
+                <p>Votre partenaire bien-être pour une transformation durable, équilibrée et épanouissante.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="../../index.html">Accueil</a></li>
+                    <li><a href="homme.html">Coaching Homme</a></li>
+                    <li><a href="femme.html">Coaching Femme</a></li>
+                    <li><a href="nutrition.html">Nutrition</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Légal</h4>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="confidentialite.html">Politique de confidentialité</a></li>
+                    <li><a href="cgv.html">Conditions générales</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li>📧 contact@vitalitecoaching.fr</li>
+                    <li>📱 06 12 34 56 78</li>
+                    <li>📍 Paris & En ligne</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Vitalité Coaching. Tous droits réservés. | Conçu avec 💚 pour votre bien-être</p>
+        </div>
+    </footer>
+
+    <script src="../js/contact.js" defer></script>
+</body>
+</html>

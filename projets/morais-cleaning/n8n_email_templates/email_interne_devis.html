@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Nouveau devis complet</title>
+</head>
+
+<body style="font-family:Arial,Helvetica,sans-serif;color:#111;background:#f6f7f9;margin:0;padding:0;">
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+    <tr>
+      <td align="center">
+        <table width="680" cellpadding="0" cellspacing="0" role="presentation"
+          style="background:#fff;border-radius:14px;border:1px solid #e7e7e7;margin:24px 0;padding:22px;">
+          <tr>
+            <td>
+              <h2 style="margin:0 0 10px 0;color:#0b2a7a;">Nouveau devis complet</h2>
+              <p style="margin:0 0 10px 0;color:#555;">Reçu via le formulaire devis complet du site.</p>
+
+              <h3 style="margin:18px 0 8px 0;">Client</h3>
+              <ul style="margin:0;padding-left:18px;">
+                <li><strong>Nom :</strong> {{ $json.nom }}</li>
+                <li><strong>Email :</strong> {{ $json.email }}</li>
+                <li><strong>Téléphone :</strong> {{ $json.telephone }}</li>
+                <li><strong>Adresse :</strong> {{ $json.adresse }}</li>
+              </ul>
+
+              <h3 style="margin:18px 0 8px 0;">Demande</h3>
+              <ul style="margin:0;padding-left:18px;">
+                <li><strong>Service :</strong> {{ $json.service }}</li>
+                <li><strong>Surface :</strong> {{ $json.surface }} m²</li>
+                <li><strong>Fréquence :</strong> {{ $json.frequence }}</li>
+                <li><strong>Estimation :</strong> {{ $json.estimation }}</li>
+              </ul>
+
+              <h3 style="margin:18px 0 8px 0;">Message</h3>
+              <div style="white-space:pre-line;border:1px solid #e1e1e1;border-radius:10px;padding:12px;">{{
+                $json.message }}</div>
+
+              <p style="margin-top:18px;color:#666;font-size:12px;">
+                Page : {{ $json.page }}<br>
+                Timestamp : {{ $json.timestamp }}
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>

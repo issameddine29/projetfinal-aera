@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://morais-cleaning.com/sitemap.xml

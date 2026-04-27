@@ -1,0 +1,157 @@
+{
+  "name": "Morais - Recrutement (Airtable + Brevo + CV)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "recrutement",
+        "responseMode": "responseNode",
+        "options": {
+          "binaryData": true
+        }
+      },
+      "name": "Webhook Recrutement",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-940, 140],
+      "id": "webhook-recrutement"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {"name": "nom", "value": "={{$json.body.nom || ''}}"},
+            {"name": "email", "value": "={{$json.body.email || ''}}"},
+            {"name": "telephone", "value": "={{$json.body.telephone || ''}}"},
+            {"name": "poste", "value": "={{$json.body.poste || ''}}"},
+            {"name": "message", "value": "={{$json.body.message || $json.body.motivation || ''}}"},
+            {"name": "experience", "value": "={{$json.body.experience || ''}}"},
+            {"name": "newsletter", "value": "={{$json.body.newsletter || ''}}"},
+            {"name": "page", "value": "={{$json.body.page || ''}}"},
+            {"name": "source", "value": "={{$json.body.source || 'recrutement'}}"},
+            {"name": "timestamp", "value": "={{$json.body.timestamp || $now}}"}
+          ]
+        },
+        "options": {}
+      },
+      "name": "Normalize Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [-700, 140],
+      "id": "normalize-recrutement"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appVuLTqzGQilUXGw",
+          "mode": "list",
+          "cachedResultName": "Morais Cleaning -CRM",
+          "cachedResultUrl": "https://airtable.com/appVuLTqzGQilUXGw"
+        },
+        "table": {
+          "__rl": true,
+          "value": "REPLACE_WITH_RECRUTEMENT_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "recrutement",
+          "cachedResultUrl": "https://airtable.com/appVuLTqzGQilUXGw"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nom": "={{$json.nom}}",
+            "Email": "={{$json.email}}",
+            "Téléphone": "={{$json.telephone}}",
+            "Poste": "={{$json.poste}}",
+            "Message": "={{$json.message}}",
+            "Source": "={{$json.source}}",
+            "Page": "={{$json.page}}",
+            "Date réception": "={{$json.timestamp}}"
+          },
+          "attemptToConvertTypes": true,
+          "convertFieldsToString": false
+        },
+        "options": {"typecast": true}
+      },
+      "name": "Airtable - Create (recrutement)",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [-460, 140],
+      "id": "airtable-recrutement",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_WITH_YOUR_AIRTABLE_CRED_ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brevo.com/v3/smtp/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "api-key", "value": "={{$env.BREVO_API_KEY || ''}}"},
+            {"name": "Content-Type", "value": "application/json"},
+            {"name": "accept", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{(() => {\n  const n = $node['Normalize Data'].json;\n  const atts = ($binary && $binary.cv) ? [{\n    name: $binary.cv.fileName || 'cv',\n    content: $binary.cv.data\n  }] : [];\n  return {\n    sender: { name: 'Morais Cleaning', email: 'recrutement@morais-cleaning.com' },\n    to: [{ email: 'recrutement@morais-cleaning.com' }],\n    replyTo: { email: n.email, name: n.nom },\n    subject: `Nouvelle candidature – ${n.nom}`,\n    htmlContent: `<h2>Nouvelle candidature</h2>\n<p><strong>Nom :</strong> ${n.nom}</p>\n<p><strong>Email :</strong> ${n.email}</p>\n<p><strong>Téléphone :</strong> ${n.telephone}</p>\n<p><strong>Poste :</strong> ${n.poste}</p>\n<p><strong>Message :</strong></p>\n<p>${n.message}</p>\n<hr>\n<p><strong>Page :</strong> ${n.page}</p>\n<p><strong>Date :</strong> ${n.timestamp}</p>`,\n    attachments: atts\n  };\n})()}}"
+      },
+      "name": "Brevo - Email RH (avec CV)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [-180, 140],
+      "id": "brevo-rh-recrutement"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brevo.com/v3/smtp/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "api-key", "value": "={{$env.BREVO_API_KEY || ''}}"},
+            {"name": "Content-Type", "value": "application/json"},
+            {"name": "accept", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{({\n  sender: { name: 'Morais Cleaning', email: 'recrutement@morais-cleaning.com' },\n  to: [{ email: $node['Normalize Data'].json.email }],\n  subject: 'Confirmation de réception de votre candidature',\n  htmlContent: `<p>Bonjour ${$node['Normalize Data'].json.nom || ''},</p>\n<p>Nous avons bien reçu votre candidature. Nous reviendrons vers vous dès que possible.</p>\n<p>Merci,<br>Morais Cleaning</p>`\n})}}"
+      },
+      "name": "Brevo - Email Candidat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [120, 140],
+      "id": "brevo-candidat"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true } }}",
+        "options": {}
+      },
+      "name": "Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [400, 140],
+      "id": "respond-ok-recrutement"
+    }
+  ],
+  "connections": {
+    "Webhook Recrutement": {"main": [[{"node": "Normalize Data", "type": "main", "index": 0}]]},
+    "Normalize Data": {"main": [[{"node": "Airtable - Create (recrutement)", "type": "main", "index": 0}]]},
+    "Airtable - Create (recrutement)": {"main": [[{"node": "Brevo - Email RH (avec CV)", "type": "main", "index": 0}]]},
+    "Brevo - Email RH (avec CV)": {"main": [[{"node": "Brevo - Email Candidat", "type": "main", "index": 0}]]},
+    "Brevo - Email Candidat": {"main": [[{"node": "Respond OK", "type": "main", "index": 0}]]}
+  },
+  "active": false,
+  "settings": {"executionOrder": "v1"},
+  "versionId": "local"
+}

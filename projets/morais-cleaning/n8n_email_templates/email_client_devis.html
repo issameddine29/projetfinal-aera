@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Confirmation de votre demande de devis</title>
+</head>
+
+<body style="margin:0;padding:0;background:#f6f7f9;font-family:Arial,Helvetica,sans-serif;color:#111;">
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+    <tr>
+      <td align="center">
+        <table width="680" cellpadding="0" cellspacing="0" role="presentation"
+          style="background:#ffffff;border-radius:14px;border:1px solid #e7e7e7;margin:24px 0;">
+          <tr>
+            <td style="padding:22px;">
+              <h1 style="margin:0 0 12px 0;font-size:24px;color:#0b2a7a;">Morais Cleaning</h1>
+              <h2 style="margin:0 0 16px 0;font-size:20px;">Demande de devis reçue</h2>
+              <p style="margin:0 0 12px 0;line-height:1.5;">Bonjour <strong>{{ $json.nom }}</strong>,</p>
+              <p style="margin:0 0 14px 0;line-height:1.5;">Merci d’avoir contacté <strong>Morais Cleaning</strong>.
+                Nous confirmons la bonne réception de votre demande. Notre équipe va l’analyser et vous recontacter
+                rapidement pour la suite.</p>
+              <div
+                style="background:#f3f5ff;border:1px solid #dfe5ff;border-radius:12px;padding:14px 14px;margin:14px 0;">
+                <h3 style="margin:0 0 10px 0;font-size:16px;letter-spacing:.2px;color:#0b2a7a;">Résumé de votre demande
+                </h3>
+                <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                  <tr>
+                    <td style="padding:6px 0;color:#555;">Service</td>
+                    <td style="padding:6px 0;"><strong>{{ $json.service }}</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 0;color:#555;">Surface</td>
+                    <td style="padding:6px 0;"><strong>{{ $json.surface }}</strong> m²</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 0;color:#555;">Fréquence</td>
+                    <td style="padding:6px 0;"><strong>{{ $json.frequence }}</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 0;color:#555;">Adresse</td>
+                    <td style="padding:6px 0;">{{ $json.adresse }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 0;color:#555;">Téléphone</td>
+                    <td style="padding:6px 0;">{{ $json.telephone }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 0;color:#555;">Email</td>
+                    <td style="padding:6px 0;">{{ $json.email }}</td>
+                  </tr>
+                </table>
+              </div>
+              <p style="margin:0 0 10px 0;line-height:1.5;"><strong>Votre message :</strong><br><span
+                  style="white-space:pre-line;">{{ $json.message }}</span></p>
+              <p style="margin:12px 0 0 0;line-height:1.5;">Cordialement,<br><strong>Morais Cleaning</strong><br><span
+                  style="color:#555;">info-devis@morais-cleaning.com</span></p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <p style="margin:10px 0 0 0;font-size:12px;color:#777;line-height:1.4;text-align:center;">Ceci est un message
+    automatique. Si vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer cet email.</p>
+</body>
+
+</html>

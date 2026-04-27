@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Gourmet - Restaurant Gastronomique</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./public/css/style.css">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loader">
+        <div class="loader-text">Le Gourmet</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+    <!-- Background Effects -->
+    <div class="bg-pattern"></div>
+    <div class="noise-overlay"></div>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="flex items-center justify-between max-w-7xl mx-auto">
+            <a href="#accueil" class="font-display text-2xl tracking-wider">Le Gourmet</a>
+            <div class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav flex gap-8" id="nav">
+                <a href="#accueil" class="nav-link" onclick="closeMenu()">Accueil</a>
+                <a href="#menu" class="nav-link" onclick="closeMenu()">La Carte</a>
+                <a href="#about" class="nav-link" onclick="closeMenu()">Notre Histoire</a>
+                <a href="#gallery" class="nav-link" onclick="closeMenu()">Galerie</a>
+                <a href="#reservation" class="nav-link" onclick="closeMenu()">Réservation</a>
+            </nav>
+        </div>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Restaurant Gastronomique</div>
+            <h1 class="hero-title">
+                Le Gourmet
+                <span>Paris</span>
+            </h1>
+            <p class="hero-subtitle">
+                Une expérience culinaire d'exception dans le cœur de Paris.
+                Découvrez une cuisine raffinée qui sublime les saveurs authentiques.
+            </p>
+            <a href="#menu" class="hero-cta">
+                Découvrir la Carte
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Défiler</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+    <!-- Menu Section -->
+    <section class="section" id="menu">
+        <div class="section-header reveal">
+            <div class="section-label">Notre Carte</div>
+            <h2 class="section-title">Les Saveurs du Moment</h2>
+        </div>
+        <!-- Allergen Legend -->
+        <div class="allergen-legend reveal">
+            <div class="allergen-legend-header">
+                <span class="allergen-legend-icon">⚠️</span>
+                <div>
+                    <div class="allergen-legend-title">Information Allergènes — 14 allergènes réglementaires</div>
+                    <p class="allergen-legend-warning">
+                        Informez votre serveur de toute allergie ou intolérance avant de commander.
+                        Notre cuisine peut contenir des traces d'allergènes. Les informations ci-dessous sont indicatives.
+                    </p>
+                </div>
+            </div>
+            <div class="allergen-legend-grid">
+                <span class="allergen-badge" data-allergen="gluten">🌾 Gluten</span>
+                <span class="allergen-badge" data-allergen="crustaces">🦐 Crustacés</span>
+                <span class="allergen-badge" data-allergen="oeufs">🥚 Œufs</span>
+                <span class="allergen-badge" data-allergen="poisson">🐟 Poisson</span>
+                <span class="allergen-badge" data-allergen="soja">🫘 Soja</span>
+                <span class="allergen-badge" data-allergen="lait">🥛 Lait</span>
+                <span class="allergen-badge" data-allergen="noix">🌰 Fruits à coque</span>
+                <span class="allergen-badge" data-allergen="celeri">🌿 Céleri</span>
+                <span class="allergen-badge" data-allergen="sesame">🌱 Sésame</span>
+                <span class="allergen-badge" data-allergen="moutarde">🟡 Moutarde</span>
+            </div>
+        </div>
+        <div class="menu-filters reveal">
+            <button class="filter-btn active" onclick="filterMenu('all')">Tout</button>
+            <button class="filter-btn" onclick="filterMenu('entrees')">Entrées</button>
+            <button class="filter-btn" onclick="filterMenu('plats')">Plats</button>
+            <button class="filter-btn" onclick="filterMenu('desserts')">Desserts</button>
+        </div>
+        <div class="menu-grid" id="menuGrid">
+            <!-- Entrees -->
+            <div class="menu-category active" id="entrees">
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1549454898-89e74334788f?w=600&q=80"
+                        alt="Velouté de Homard" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Velouté de Homard</h3>
+                        <span class="dish-price">28€</span>
+                    </div>
+                    <p class="dish-desc">Bisque onctueuse aux notes de cognac, chips de chorizo, huile de persil</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Sans gluten</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="crustaces" title="Contient des crustacés">🦐 Crustacés</span>
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait">🥛 Lait</span>
+                            <span class="allergen-badge" data-allergen="celeri" title="Peut contenir du céleri">🌿 Céleri</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1626082927389-d2c5c70d6e65?w=600&q=80"
+                        alt="Foie Gras Maison" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Foie Gras Maison</h3>
+                        <span class="dish-price">32€</span>
+                    </div>
+                    <p class="dish-desc">Mi-cuit, chutney de figues, toast brioché, fleur de sel de Guérande</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Signature</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="gluten" title="Contient du gluten (toast brioché)">🌾 Gluten</span>
+                            <span class="allergen-badge" data-allergen="oeufs" title="Contient des œufs">🥚 Œufs</span>
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (beurre, brioche)">🥛 Lait</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1579584425555-c3ce1e8001a4?w=600&q=80"
+                        alt="Tartare de Thon" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Tartare de Thon</h3>
+                        <span class="dish-price">24€</span>
+                    </div>
+                    <p class="dish-desc">Thon rouge frais, avocat, sésame noir, sauce ponzu, wasabi</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Sans gluten</span>
+                        <span class="dish-tag">Poisson</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="poisson" title="Contient du poisson">🐟 Poisson</span>
+                            <span class="allergen-badge" data-allergen="sesame" title="Contient du sésame noir">🌱 Sésame</span>
+                            <span class="allergen-badge" data-allergen="soja" title="Contient du soja (sauce ponzu)">🫘 Soja</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1529312266912-b33cf6227e24?w=600&q=80"
+                        alt="Oeuf Parfait" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Oeuf Parfait</h3>
+                        <span class="dish-price">18€</span>
+                    </div>
+                    <p class="dish-desc">Oeuf bio cuit basse température, caviar d'aubergine, tuile de parmesan</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Végétarien</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="oeufs" title="Contient des œufs">🥚 Œufs</span>
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (parmesan)">🥛 Lait</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <!-- Plats -->
+            <div class="menu-category active" id="plats">
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&q=80"
+                        alt="Filet de Boeuf" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Filet de Boeuf</h3>
+                        <span class="dish-price">48€</span>
+                    </div>
+                    <p class="dish-desc">Black Angus maturé, sauce poivre vert, purée de céleri, rosette de carottes</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Signature</span>
+                        <span class="dish-tag">Viande</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (purée, sauce)">🥛 Lait</span>
+                            <span class="allergen-badge" data-allergen="celeri" title="Contient du céleri">🌿 Céleri</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1519708227418-c8fd9fef83c5?w=600&q=80"
+                        alt="Bar de Ligne" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Bar de Ligne</h3>
+                        <span class="dish-price">42€</span>
+                    </div>
+                    <p class="dish-desc">Cuit entier au sel de Guérande, légumes de saison, beurre blanc citronné</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Poisson</span>
+                        <span class="dish-tag">Sans gluten</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="poisson" title="Contient du poisson">🐟 Poisson</span>
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (beurre blanc)">🥛 Lait</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80" alt="Carré d'Agneau"
+                        class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Carré d'Agneau</h3>
+                        <span class="dish-price">46€</span>
+                    </div>
+                    <p class="dish-desc">Rôti aux herbes de Provence, jus au thym, gratin dauphinois</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Viande</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (gratin dauphinois)">🥛 Lait</span>
+                            <span class="allergen-badge" data-allergen="gluten" title="Peut contenir du gluten">🌾 Gluten</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=600&q=80"
+                        alt="Risotto aux Truffes" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Risotto aux Truffes</h3>
+                        <span class="dish-price">38€</span>
+                    </div>
+                    <p class="dish-desc">Riz Carnaroli, truffe noire du Périgord, parmesan 24 mois, huile de truffe</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Végétarien</span>
+                        <span class="dish-tag">Signature</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (parmesan, beurre)">🥛 Lait</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <!-- Desserts -->
+            <div class="menu-category active" id="desserts">
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80"
+                        alt="Soufflé au Grand Marnier" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Soufflé au Grand Marnier</h3>
+                        <span class="dish-price">18€</span>
+                    </div>
+                    <p class="dish-desc">Soufflé aérien aux agrumes, glace à l'orange, zestes caramélisés</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Signature</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="gluten" title="Contient du gluten">🌾 Gluten</span>
+                            <span class="allergen-badge" data-allergen="oeufs" title="Contient des œufs">🥚 Œufs</span>
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (glace)">🥛 Lait</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=600&q=80"
+                        alt="Tarte au Citron" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Tarte au Citron</h3>
+                        <span class="dish-price">14€</span>
+                    </div>
+                    <p class="dish-desc">Pâte sablée bretonne, crémeux citron de Menton, meringue italienne</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Classique</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="gluten" title="Contient du gluten (pâte sablée)">🌾 Gluten</span>
+                            <span class="allergen-badge" data-allergen="oeufs" title="Contient des œufs">🥚 Œufs</span>
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (beurre)">🥛 Lait</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80"
+                        alt="Chocolate Noire" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Chocolate Noire</h3>
+                        <span class="dish-price">16€</span>
+                    </div>
+                    <p class="dish-desc">Gâteau fondant chocolat noir 70%, coeur coulant, sorbet à la vanille</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Végétarien</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="gluten" title="Contient du gluten">🌾 Gluten</span>
+                            <span class="allergen-badge" data-allergen="oeufs" title="Contient des œufs">🥚 Œufs</span>
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (beurre, chocolat)">🥛 Lait</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=600&q=80"
+                        alt="Assiette de Fromages" class="dish-image" loading="lazy">
+                    <div class="dish-header">
+                        <h3 class="dish-name">Assiette de Fromages</h3>
+                        <span class="dish-price">15€</span>
+                    </div>
+                    <p class="dish-desc">Sélection de 5 fromages affinés, pain aux noix, condiments</p>
+                    <div class="dish-tags">
+                        <span class="dish-tag">Végétarien</span>
+                    </div>
+                    <div class="dish-allergens">
+                        <div class="allergen-section-label">Allergènes</div>
+                        <div class="allergen-badges">
+                            <span class="allergen-badge" data-allergen="lait" title="Contient du lait (fromages)">🥛 Lait</span>
+                            <span class="allergen-badge" data-allergen="noix" title="Contient des noix (pain aux noix)">🌰 Fruits à coque</span>
+                            <span class="allergen-badge" data-allergen="gluten" title="Contient du gluten (pain)">🌾 Gluten</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="about-grid">
+            <div class="about-image reveal">
+                <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80"
+                    alt="Notre chef en cuisine" loading="lazy">
+            </div>
+            <div class="about-content reveal">
+                <div class="section-label">Notre Histoire</div>
+                <h3>Une Passion Transmise Depuis Trois Générations</h3>
+                <p>
+                    Fondé en 1995 par le Chef Marc Dubois, Le Gourmet est devenu une référence
+                    de la gastronomie parisienne. Notre philosophie reste inchangée : sublimer les
+                    produits les plus nobles avec une technique irréprochable et une créativité sans cesse renouvelée.
+                </p>
+                <p>
+                    Chaque plat raconte une histoire, celle de nos producteurs, de nos terroirs,
+                    et de notre amour pour l'excellence. Nous vous invitons à découvrir cette aventure gustative unique.
+                </p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number" data-target="29">0</div>
+                        <div class="stat-label">Années d'Excellence</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="2">0</div>
+                        <div class="stat-label">Étoiles Michelin</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="15">0</div>
+                        <div class="stat-label">Chefs Formés</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="gallery-grid">
+            <div class="gallery-item" onclick="openLightbox(0)">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80"
+                    alt="Intérieur du restaurant" loading="lazy">
+            </div>
+            <div class="gallery-item" onclick="openLightbox(1)">
+                <img src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=600&q=80" alt="Plat signature"
+                    loading="lazy">
+            </div>
+            <div class="gallery-item" onclick="openLightbox(2)">
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&q=80" alt="Salle à manger"
+                    loading="lazy">
+            </div>
+            <div class="gallery-item" onclick="openLightbox(3)">
+                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80" alt="Table dressée"
+                    loading="lazy">
+            </div>
+            <div class="gallery-item" onclick="openLightbox(4)">
+                <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&q=80" alt="Cuisine"
+                    loading="lazy">
+            </div>
+            <div class="gallery-item" onclick="openLightbox(5)">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Présentation"
+                    loading="lazy">
+            </div>
+            <div class="gallery-item" onclick="openLightbox(6)">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80" alt="Bar"
+                    loading="lazy">
+            </div>
+            <div class="gallery-item" onclick="openLightbox(7)">
+                <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?w=600&q=80" alt="Dessert"
+                    loading="lazy">
+            </div>
+        </div>
+    </section>
+    <!-- Testimonials -->
+    <section class="section testimonials">
+        <div class="section-header reveal">
+            <div class="section-label">Témoignages</div>
+            <h2 class="section-title">Ce Qu'ils Disent</h2>
+        </div>
+        <div class="testimonials-container reveal" style="max-width: 900px; margin: 0 auto;">
+            <div class="testimonials-track" id="testimonialsTrack">
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">
+                        "Une expérience culinaire extraordinaire. Chaque plat était une découverte,
+                        un voyage sensoriel que je n'oublierai jamais. Le service était impeccable."
+                    </p>
+                    <div class="testimonial-author">Marie Laurent</div>
+                    <div class="testimonial-role">Critique Culinaire</div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">
+                        "Le meilleur repas de notre voyage à Paris. L'attention aux détails
+                        et la qualité des ingrédients étaient remarquables. Nous reviendrons."
+                    </p>
+                    <div class="testimonial-author">Thomas & Sarah Mitchell</div>
+                    <div class="testimonial-role">Voyageurs</div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">
+                        "Un restaurant qui comprend l'art de la gastronomie française.
+                        La carte des vins est exceptionnelle et le sommelier un véritable expert."
+                    </p>
+                    <div class="testimonial-author">Pierre Dumont</div>
+                    <div class="testimonial-role">Amateur de Vins</div>
+                </div>
+            </div>
+            <div class="testimonial-dots" id="testimonialDots"></div>
+        </div>
+    </section>
+    <!-- Reservation Section -->
+    <section class="section reservation" id="reservation">
+        <div class="section-header reveal">
+            <div class="section-label">Réservation</div>
+            <h2 class="section-title">Réservez Votre Table</h2>
+        </div>
+        <div class="reservation-container reveal">
+            <form id="reservationForm" class="form-grid" onsubmit="handleReservation(event)">
+                <div class="form-group">
+                    <label for="name">Nom Complet</label>
+                    <input type="text" id="name" required placeholder="Votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="votre@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" required placeholder="+33 6 00 00 00 00">
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Heure</label>
+                    <select id="time" required>
+                        <option value="">Choisir une heure</option>
+                        <option>12:00</option>
+                        <option>12:30</option>
+                        <option>13:00</option>
+                        <option>13:30</option>
+                        <option>19:00</option>
+                        <option>19:30</option>
+                        <option>20:00</option>
+                        <option>20:30</option>
+                        <option>21:00</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Nombre de Personnes</label>
+                    <select id="guests" required>
+                        <option value="">Choisir...</option>
+                        <option>2 personnes</option>
+                        <option>3 personnes</option>
+                        <option>4 personnes</option>
+                        <option>5 personnes</option>
+                        <option>6 personnes</option>
+                        <option>7-8 personnes</option>
+                        <option>Plus de 8</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <label for="special">Demandes Spéciales</label>
+                    <textarea id="special" rows="3" placeholder="Allergies, occasion spéciale..."></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        Confirmer la Réservation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Le Gourmet</h4>
+                <p>Une expérience gastronomique unique depuis 1995. Passion, excellence et authenticité.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Liens Rapides</h4>
+                <a href="#accueil">Accueil</a>
+                <a href="#menu">Notre Carte</a>
+                <a href="#about">Notre Histoire</a>
+                <a href="#reservation">Réservation</a>
+                <a href="#">Carte Cadeau</a>
+            </div>
+            <div class="footer-col">
+                <h4>Horaires</h4>
+                <p><strong>Mardi - Vendredi</strong><br>Déjeuner: 12h00 - 14h30<br>Dîner: 19h00 - 22h30</p>
+                <p style="margin-top: 1rem;"><strong>Samedi</strong><br>Dîner: 19h00 - 23h00</p>
+                <p style="margin-top: 1rem;"><strong>Dimanche - Lundi</strong><br>Fermé</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>42 Rue de la Gastronomie<br>75008 Paris, France</p>
+                <p style="margin-top: 1rem;">+33 1 42 00 00 00</p>
+                <p style="margin-top: 0.5rem;">contact@legourmet.fr</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Le Gourmet. Tous droits réservés. | <a href="#">Mentions Légales</a> | <a
+                    href="#">Confidentialité</a></p>
+        </div>
+    </footer>
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <span class="lightbox-close" onclick="closeLightbox(event)">&times;</span>
+        <span class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); prevImage()">&#8249;</span>
+        <img src="" id="lightbox-img" alt="Image agrandie">
+        <span class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); nextImage()">&#8250;</span>
+    </div>
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span id="notification-text"></span>
+    </div>
+    <script src="./public/js/main.js"></script>
+</body>
+
+</html>

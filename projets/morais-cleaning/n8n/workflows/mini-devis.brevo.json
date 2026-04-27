@@ -1,0 +1,155 @@
+{
+  "name": "Morais - Mini Devis (Airtable + Brevo)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mini-devis",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook Mini Devis",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-900, 120],
+      "id": "webhook-mini-devis"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {"name": "nom", "value": "={{$json.body.nom || $json.body.name || ''}}"},
+            {"name": "email", "value": "={{$json.body.email || ''}}"},
+            {"name": "telephone", "value": "={{$json.body.telephone || $json.body.phone || ''}}"},
+            {"name": "service", "value": "={{$json.body.service || ''}}"},
+            {"name": "surface", "value": "={{$json.body.surface || ''}}"},
+            {"name": "frequence", "value": "={{$json.body.frequence || ''}}"},
+            {"name": "ville", "value": "={{$json.body.ville || ''}}"},
+            {"name": "message", "value": "={{$json.body.message || ''}}"},
+            {"name": "page", "value": "={{$json.body.page || ''}}"},
+            {"name": "source", "value": "={{$json.body.source || 'mini-devis'}}"},
+            {"name": "timestamp", "value": "={{$json.body.timestamp || $now}}"}
+          ]
+        },
+        "options": {}
+      },
+      "name": "Normalize Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [-660, 120],
+      "id": "normalize-mini-devis"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appVuLTqzGQilUXGw",
+          "mode": "list",
+          "cachedResultName": "Morais Cleaning -CRM",
+          "cachedResultUrl": "https://airtable.com/appVuLTqzGQilUXGw"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblvtvTM6EARGC10Z",
+          "mode": "list",
+          "cachedResultName": "mini-devis",
+          "cachedResultUrl": "https://airtable.com/appVuLTqzGQilUXGw/tblvtvTM6EARGC10Z"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nom": "={{$json.nom}}",
+            "Email": "={{$json.email}}",
+            "Telephone": "={{$json.telephone}}",
+            "Service": "={{$json.service}}",
+            "Surface": "={{$json.surface}}",
+            "Message": "={{$json.message}}",
+            "Date": "={{$json.timestamp}}"
+          },
+          "attemptToConvertTypes": true,
+          "convertFieldsToString": false
+        },
+        "options": {"typecast": true}
+      },
+      "name": "Airtable - Create (mini-devis)",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [-420, 120],
+      "id": "airtable-mini-devis",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "REPLACE_WITH_YOUR_AIRTABLE_CRED_ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brevo.com/v3/smtp/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "api-key", "value": "={{$env.BREVO_API_KEY || ''}}"},
+            {"name": "Content-Type", "value": "application/json"},
+            {"name": "accept", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{({\n  sender: { name: 'Morais Cleaning', email: 'info-devis@morais-cleaning.com' },\n  to: [{ email: 'info-devis@morais-cleaning.com' }],\n  replyTo: { email: $node['Normalize Data'].json.email, name: $node['Normalize Data'].json.nom },\n  subject: `NOUVEAU mini-devis - ${$node['Normalize Data'].json.nom} (${$node['Normalize Data'].json.ville})`,\n  htmlContent: `<h2>Nouveau mini-devis</h2>\n<p><strong>Nom :</strong> ${$node['Normalize Data'].json.nom}</p>\n<p><strong>Email :</strong> ${$node['Normalize Data'].json.email}</p>\n<p><strong>Téléphone :</strong> ${$node['Normalize Data'].json.telephone}</p>\n<p><strong>Ville :</strong> ${$node['Normalize Data'].json.ville}</p>\n<p><strong>Service :</strong> ${$node['Normalize Data'].json.service}</p>\n<p><strong>Surface :</strong> ${$node['Normalize Data'].json.surface}</p>\n<p><strong>Fréquence :</strong> ${$node['Normalize Data'].json.frequence}</p>\n<p><strong>Message :</strong> ${$node['Normalize Data'].json.message}</p>\n<hr>\n<p><strong>Source :</strong> ${$node['Normalize Data'].json.source}</p>\n<p><strong>Page :</strong> ${$node['Normalize Data'].json.page}</p>\n<p><strong>Date :</strong> ${$node['Normalize Data'].json.timestamp}</p>`\n})}}"
+      },
+      "name": "Brevo - Email Interne",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [-160, 120],
+      "id": "brevo-interne-mini"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brevo.com/v3/smtp/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "api-key", "value": "={{$env.BREVO_API_KEY || ''}}"},
+            {"name": "Content-Type", "value": "application/json"},
+            {"name": "accept", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{({\n  sender: { name: 'Morais Cleaning', email: 'info-devis@morais-cleaning.com' },\n  to: [{ email: $node['Normalize Data'].json.email }],\n  subject: 'Morais Cleaning – Confirmation de votre mini-devis',\n  htmlContent: `<p>Bonjour ${$node['Normalize Data'].json.nom || ''},</p>\n<p>Nous avons bien reçu votre demande de mini-devis. Nous vous recontactons rapidement.</p>\n<p>Merci,<br>Morais Cleaning</p>`\n})}}"
+      },
+      "name": "Brevo - Email Client",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [100, 120],
+      "id": "brevo-client-mini"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true } }}",
+        "options": {}
+      },
+      "name": "Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [360, 120],
+      "id": "respond-ok-mini"
+    }
+  ],
+  "connections": {
+    "Webhook Mini Devis": {"main": [[{"node": "Normalize Data", "type": "main", "index": 0}]]},
+    "Normalize Data": {"main": [[{"node": "Airtable - Create (mini-devis)", "type": "main", "index": 0}]]},
+    "Airtable - Create (mini-devis)": {"main": [[{"node": "Brevo - Email Interne", "type": "main", "index": 0}]]},
+    "Brevo - Email Interne": {"main": [[{"node": "Brevo - Email Client", "type": "main", "index": 0}]]},
+    "Brevo - Email Client": {"main": [[{"node": "Respond OK", "type": "main", "index": 0}]]}
+  },
+  "active": false,
+  "settings": {"executionOrder": "v1"},
+  "versionId": "local"
+}

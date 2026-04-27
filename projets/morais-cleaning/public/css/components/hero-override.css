@@ -1,0 +1,14 @@
+/* ============================================ */
+/* OVERRIDE - Masquer l'ancien .hero            */
+/* Si la classe .hero existe encore             */
+/* ============================================ */
+
+/* Masquer la vieille section hero si elle existe */
+.hero {
+    display: none !important;
+}
+
+/* S'assurer que .hero-enhanced prend toute la hauteur */
+.hero-enhanced {
+    width: 100%;
+}
